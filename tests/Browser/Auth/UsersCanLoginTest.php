@@ -24,9 +24,9 @@ class UsersCanLoginTest extends DuskTestCase
                 ->type('username', 'edward@edtlsoft.com')
                 ->type('password', 'password')
                 ->press('@btn-login')
-                // ->waitForTextIn('div.swal2-container', 'Ingresando', 20)
-                // ->assertSeeIn('div.swal2-container', 'Ingresando')\
-                ->pause(10000)
+                ->waitForText('Ingresando', 12)
+                ->assertSee('Ingresando')
+                // ->pause(10000)
                 ->assertPathIs('/')
                 ->assertAuthenticated();
         });
