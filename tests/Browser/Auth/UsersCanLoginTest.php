@@ -19,16 +19,14 @@ class UsersCanLoginTest extends DuskTestCase
     {
         $user = User::factory()->create(['email' => 'edward@edtlsoft.com']);
 
-        $this->browse(function (Browser $browser) {
+        $this->browse(function (Browser $browser) use ($user) {
             $browser->visit('/login')
                 ->type('username', 'edward@edtlsoft.com')
                 ->type('password', 'password')
                 ->press('@btn-login')
-                ->waitForText('Ingresando', 12)
-                ->assertSee('Ingresando')
-                // ->pause(10000)
+                ->pause(1000)
                 ->assertPathIs('/')
-                ->assertAuthenticated();
+                ->assertAuthenticatedAs($user);
         });
     }
 
@@ -40,15 +38,14 @@ class UsersCanLoginTest extends DuskTestCase
     {
         $user = User::factory()->create(['username' => 'edward']);
 
-        $this->browse(function (Browser $browser) {
-            $browser->visit('/login')
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->logout()->visit('/login')
                 ->type('username', 'edward')
                 ->type('password', 'password')
-                ->press('@login-btn')
-                ->waitForText('Ingresando')
-                ->assertSee('Ingresando')
+                ->press('@btn-login')
+                ->pause(1000)
                 ->assertPathIs('/')
-                ->assertAuthenticated();
+                ->assertAuthenticatedAs($user);
         });
     }
 
@@ -59,7 +56,7 @@ class UsersCanLoginTest extends DuskTestCase
             $browser->visit('/login')
                 ->type('username', 'email@email.com')
                 ->type('password', 'password')
-                ->press('@login-btn')
+                ->press('@btn-login')
                 ->waitForText('Credenciales incorrectas')
                 ->assertSee('Credenciales incorrectas')
                 ->assertPathIs('/login')
