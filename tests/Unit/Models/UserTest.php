@@ -2,11 +2,16 @@
 
 namespace Tests\Unit\Models;
 
-use App\Models\User;
 use Tests\TestCase;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Employee;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     public function an_user_has_an_username()
     {
@@ -15,6 +20,34 @@ class UserTest extends TestCase
         $this->assertEquals(
             '1090111222',
             $user->username
+        );
+    }
+
+    /** @test */
+    public function an_user_has_one_employee()
+    {
+        $user     = User::factory()->create(['username' => '1090111222']);
+        $employee = Employee::factory()->create(['user_id' => $user->id]);
+
+        $this->assertInstanceOf(
+            Employee::class,
+            $user->fresh()->employee
+        );
+    }
+
+    /** @test */
+    public function an_user_has_many_roles()
+    {
+        $user  = User::factory()->create(['username' => '1090111222']);
+        $roles = Role::factory()->count(5)->create();
+
+        $user->roles()->attach(
+            $user->roles()->attach($roles->map(function($r){ return $r->id; })->toArray())
+        );
+
+        $this->assertInstanceOf(
+            Role::class,
+            $user->fresh()->roles()->first()
         );
     }
 }

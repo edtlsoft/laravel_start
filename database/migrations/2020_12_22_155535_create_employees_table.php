@@ -21,7 +21,7 @@ class CreateEmployeesTable extends Migration
             $table->string('lastname', 50);
             $table->date('birthdate')->nullable();
             $table->enum('gender', ['Masculino', 'Femenino']);
-            $table->string('cargo', 150);
+            $table->string('employee_title', 150);
             $table->timestamps();
         });
     }
