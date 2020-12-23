@@ -39,10 +39,10 @@ class UserTest extends TestCase
     public function an_user_has_many_roles()
     {
         $user  = User::factory()->create(['username' => '1090111222']);
-        $roles = Role::factory()->count(5)->create();
+        $roles = Role::factory()->count(2)->create();
 
         $user->roles()->attach(
-            $user->roles()->attach($roles->map(function($r){ return $r->id; })->toArray())
+            $roles->map(function($role){ return $role->id; })->toArray()
         );
 
         $this->assertInstanceOf(
