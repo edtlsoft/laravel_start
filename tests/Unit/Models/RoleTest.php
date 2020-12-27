@@ -13,7 +13,7 @@ class RoleTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
-    public function an_role_has_many_users()
+    public function a_role_has_many_users()
     {
         $role  = Role::factory()->create();
         $users = User::factory()->count(2)->create();
@@ -29,7 +29,7 @@ class RoleTest extends TestCase
     }
 
     /** @test */
-    public function an_role_has_many_permissions()
+    public function a_role_has_many_permissions()
     {
         $role  = Role::factory()->create();
         $permissions = Permission::factory()->count(2)->create();
@@ -43,4 +43,25 @@ class RoleTest extends TestCase
             $role->fresh()->permissions()->first()
         );
     }
+
+    /** @test */
+    public function a_role_has_one_scoped_named_has_permission()
+    {
+        $roles  = Role::factory()->count(2)->create();
+        $permissions = Permission::factory()->count(2)->create();
+
+        $roles->first()->permissions()->attach(
+            $permissions->map(function($permission){ return $permission->id; })->toArray()
+        );
+
+        $this->assertTrue(
+            Role::hasPermission($permissions->first()->name)->exists()
+        );
+
+        $this->assertFalse(
+            Role::hasPermission('Permission not validate')->exists()
+        );
+    }
+
+    
 }
