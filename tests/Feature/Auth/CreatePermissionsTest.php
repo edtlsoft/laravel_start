@@ -14,12 +14,10 @@ class CreatePermissionsTest extends TestCase
     public function an_user_super_administrator_can_create_permissions()
     {
         $this->withoutExceptionHandling();
-        $user = $this->create_user([], ['name' => 'Super Administrador'], ['name' => 'super_administrador']);
+        $user = $this->create_user([], ['name' => 'Super Administrator'], ['name' => 'super_administrator']);
         $permission = ['name' => 'permission_one', 'description' => 'Permission number one'];
 
         $response = $this->actingAs($user)->postJson(route('permissions.store'), $permission);
-
-        //dd($response);
 
         $response->assertJson([
             'name' => $permission['name'],

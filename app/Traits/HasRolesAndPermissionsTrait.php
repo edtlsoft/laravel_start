@@ -31,9 +31,9 @@ Trait HasRolesAndPermissionsTrait {
     public function addPermissionForDefault(array $permissions)
     {
         if( \is_array($permissions) ){
-            \array_unshift($permissions, 'super_administrador');
+            \array_unshift($permissions, 'super_administrator');
         } else {
-            $permissions = ['super_administrador', $permissions];
+            $permissions = ['super_administrator', $permissions];
         }
 
         return $permissions;
