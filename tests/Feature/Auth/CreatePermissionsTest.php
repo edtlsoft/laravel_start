@@ -19,11 +19,11 @@ class CreatePermissionsTest extends TestCase
 
         $response = $this->actingAs($user)->postJson(route('permissions.store'), $permission);
 
+        //dd($response);
+
         $response->assertJson([
-            'data' => [
-                'name' => $permission['name'],
-                'description' => $permission['description'],
-            ]
+            'name' => $permission['name'],
+            'description' => $permission['description']
         ]);
 
         $this->assertDatabaseHas('permissions', [

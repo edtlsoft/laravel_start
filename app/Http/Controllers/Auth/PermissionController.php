@@ -15,7 +15,7 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-        $request->user()->isAuthorized();
+        $request->user()->isAuthorized(['permissions_store']);
 
         $permission = Permission::create($request->only(['name', 'description']));
 
