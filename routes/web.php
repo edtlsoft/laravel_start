@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\PermissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
+
+Route::post('/permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
+
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -18,4 +18,11 @@ class Role extends Model
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    public function scopeHasPermission($query, $permission_name)
+    {
+        return $query->whereHas('permissions', function($query) use ($permission_name){
+            $query->where('name', $permission_name);
+        });
+    }
 }

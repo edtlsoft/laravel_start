@@ -6,6 +6,7 @@ use Tests\TestCase;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Employee;
+use App\Traits\HasRolesAndPermissionsTrait;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UserTest extends TestCase
@@ -49,6 +50,12 @@ class UserTest extends TestCase
             Role::class,
             $user->fresh()->roles()->first()
         );
+    }
+
+    /** @test */
+    public function user_model_must_use_the_trait_has_roles_and_permissions()
+    {
+        $this->assertClassUseTrait(User::class, HasRolesAndPermissionsTrait::class);
     }
 }
  
