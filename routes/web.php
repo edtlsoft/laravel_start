@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\PermissionController;
 
 /*
@@ -19,9 +21,13 @@ Auth::routes();
 Route::post('/permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 
+
+/*
+* ROUTES OF AUTHENTICATION
+*/
+Route::namespace('Auth')->group(base_path('routes/modules/authentication.php'));
 
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Wildcard route
+Route::get('{path}', [DashboardController::class, 'index'])->where('path', '([A-z0-9\-\/\_\.Ññ]+)?');
