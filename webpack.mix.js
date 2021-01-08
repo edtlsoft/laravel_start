@@ -56,7 +56,7 @@ else {
 
 if (process.env.npm_config_browser_sync) {
     mix.browserSync({
-        proxy: 'http://localhost',
+        proxy: 'http://laravel.start.test',
         open: true,
     });
 }

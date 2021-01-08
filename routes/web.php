@@ -18,7 +18,7 @@ use App\Http\Controllers\Auth\PermissionController;
 
 Auth::routes();
 
-Route::post('/permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
+Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
 
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 

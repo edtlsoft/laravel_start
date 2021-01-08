@@ -101,6 +101,7 @@
                     
                     return config;
                 });
+                
                 axios.post('login', this.authentication)
                 .then( data => {
                     if( ! data.data.success ) {
