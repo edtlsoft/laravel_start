@@ -9,11 +9,10 @@ import router from './routes'
 import store from './store'
 
 // Mixins
-import mixins from './mixins'
+require('./mixins')
 
 const app = new Vue({
     el: '#app',
     router,
     store,
-    mixins,
 });

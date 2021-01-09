@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"f50aaf8550ecde298e26","Dashboard":"fea39be2287c55647a40"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"1066d1ecca85d33109e1","Dashboard":"fea39be2287c55647a40"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -57649,7 +57649,6 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./routes */ "./resources/js/routes/index.js");
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _mixins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mixins */ "./resources/js/mixins/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js"); // Vue Router
@@ -57658,12 +57657,12 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
  // Mixins
 
+__webpack_require__(/*! ./mixins */ "./resources/js/mixins/index.js");
 
 var app = new Vue({
   el: '#app',
   router: _routes__WEBPACK_IMPORTED_MODULE_0__["default"],
-  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"],
-  mixins: _mixins__WEBPACK_IMPORTED_MODULE_2__["default"]
+  store: _store__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 
 /***/ }),
@@ -57725,7 +57724,8 @@ window.Swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2
 /***/ (function(module, exports, __webpack_require__) {
 
 var map = {
-	"./modal.js": "./resources/js/mixins/modal.js"
+	"./axios.js": "./resources/js/mixins/axios.js",
+	"./modals.js": "./resources/js/mixins/modals.js"
 };
 
 
@@ -57750,30 +57750,100 @@ webpackContext.id = "./resources/js/mixins sync recursive (?<!index)\\.js$/";
 
 /***/ }),
 
-/***/ "./resources/js/mixins/index.js":
+/***/ "./resources/js/mixins/axios.js":
 /*!**************************************!*\
-  !*** ./resources/js/mixins/index.js ***!
+  !*** ./resources/js/mixins/axios.js ***!
   \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var mixins = [];
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_0__);
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    setInterceptorAxios: function setInterceptorAxios() {
+      var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Cargando';
+      return axios.interceptors.request.use(function (config) {
+        sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+          title: message,
+          allowEscapeKey: false,
+          allowOutsideClick: false,
+          didOpen: function didOpen() {
+            sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.showLoading();
+          }
+        });
+        return config;
+      });
+    },
+    ejectInterceptorAxios: function ejectInterceptorAxios(interceptor) {
+      axios.interceptors.request.eject(interceptor);
+    },
+    showErrorHttpAxios: function showErrorHttpAxios(error) {
+      var _error$response;
+
+      var message = 'Ocurrio un error desconocido al intentar realizar la peticion, intentelo nuevamente.';
+
+      if (error.message || (_error$response = error.response) !== null && _error$response !== void 0 && _error$response.data) {
+        message = getMessageErrorHttp(error, message);
+      }
+
+      sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
+        title: message,
+        icon: 'error'
+      });
+    },
+    getMessageErrorHttp: function getMessageErrorHttp(error, message) {
+      if (error.message) {
+        if (error.message === 'Network Error') {
+          message = 'Error al intentar establecer conexión con el servidor, revise su conexión de internet y vuelva a intentarlo.';
+        } else {
+          message = "Ocurrio un error inesperado, \"".concat(error.message, "\", si el error persiste comuniquese con el administrador de sistemas.");
+        }
+      } else {
+        var _error$reponse, _error$reponse$data;
+
+        if ((_error$reponse = error.reponse) !== null && _error$reponse !== void 0 && (_error$reponse$data = _error$reponse.data) !== null && _error$reponse$data !== void 0 && _error$reponse$data.errors) {
+          message = error.reponse.data.errors[Object.keys(error.reponse.data.errors)[0]][0];
+        } else {
+          message = response.data.message || message;
+        }
+      }
+
+      return message;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/mixins/index.js":
+/*!**************************************!*\
+  !*** ./resources/js/mixins/index.js ***!
+  \**************************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+
 
 var files = __webpack_require__("./resources/js/mixins sync recursive (?<!index)\\.js$/");
 
 files.keys().map(function (mixin) {
-  mixins.push(files(mixin)["default"]);
+  vue__WEBPACK_IMPORTED_MODULE_0___default.a.mixin(files(mixin)["default"]);
 });
-/* harmony default export */ __webpack_exports__["default"] = (mixins);
 
 /***/ }),
 
-/***/ "./resources/js/mixins/modal.js":
-/*!**************************************!*\
-  !*** ./resources/js/mixins/modal.js ***!
-  \**************************************/
+/***/ "./resources/js/mixins/modals.js":
+/*!***************************************!*\
+  !*** ./resources/js/mixins/modals.js ***!
+  \***************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -57977,30 +58047,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
   state: {
-    permissions: [],
-    permission: {
-      name: '',
-      description: ''
-    },
-    openPermissionsForm: false
+    permissions: []
   },
   getters: {
     getPermissions: function getPermissions(state) {
       return state.permissions;
     },
-    getPermission: function getPermission(state) {
-      return state.permission;
-    },
-    getOpenPermissionsForm: function getOpenPermissionsForm(state) {
-      return state.openPermissionsForm;
+    getPermissionForm: function getPermissionForm(state) {
+      return state.permissionForm;
     }
   },
   mutations: {
-    setOpenPermissionsForm: function setOpenPermissionsForm(state, value) {
-      state.openPermissionsForm = value;
-    },
     addPermissionToList: function addPermissionToList(state, permission) {
       state.permissions.unshift(permission);
+    },
+    setPermissionFormUpdateMode: function setPermissionFormUpdateMode(state, value) {
+      state.permissionForm.updateMode = value;
+    }
+  },
+  modules: {
+    form: {
+      namespaced: true,
+      state: {
+        updateMode: false,
+        permission: {
+          name: '',
+          description: ''
+        }
+      },
+      getters: {
+        getUpdateMode: function getUpdateMode(state) {
+          return state.updateMode;
+        },
+        getPermission: function getPermission(state) {
+          return state.permission;
+        }
+      },
+      mutations: {
+        setUpdateMode: function setUpdateMode(state, value) {
+          return state.updateMode = value;
+        },
+        setPermission: function setPermission(state, permission) {
+          return state.updateMode = permission;
+        }
+      }
     }
   }
 });

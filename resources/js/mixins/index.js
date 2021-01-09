@@ -1,9 +1,15 @@
-let mixins = []
+let mixinsGlobals = {}
 
-const files = require.context('./', true, /(?<!index)\.js$/i)
+const mixinFiles = require.context('./', true, /(?<!index)\.js$/i)
 
-files.keys().map(mixin => {
-    mixins.push(files(mixin).default)
+mixinFiles.keys().map(mixin => {
+    let mixinObject = mixinFiles(mixin).default
+
+    Object.assign(mixinsGlobals, {
+        [mixin.split('/').pop().replace('.js', '')]: mixinObject
+    })
+
+    Vue.mixin(mixinObject)
 })
 
-export default mixins
+window.mixins = mixinsGlobals
