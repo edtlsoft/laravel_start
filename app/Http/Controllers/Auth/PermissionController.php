@@ -16,9 +16,9 @@ class PermissionController extends Controller
     public function index(Request $request) {
         $request->user()->isAuthorized(['permissions_index']);
 
-        $permissions = Permission::latest()->get();
+        $permissions = Permission::latest();
 
-        return response()->json(compact('permissions'));
+        return datatables()->eloquent($permissions)->toJson();
     }
 
     public function store(Request $request)

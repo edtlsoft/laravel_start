@@ -20,17 +20,19 @@ class ListPermssionsTest extends TestCase
         $permission_five = Permission::factory()->create(['created_at' => now()->addMinutes(3)]);
 
         $response = $this->actingAs($user)->getJson(route('permissions.index'));
-        // dd($response->getContent());
+        // dd(
+        //     json_decode($response->getContent())
+        // );
 
         $response->assertStatus(200);
 
         $this->assertEquals(
             $permission_five->description,
-            $response->json('permissions.0.description')
+            $response->json('data.0.description')
         );
         $this->assertEquals(
             $permission_four->description,
-            $response->json('permissions.1.description')
+            $response->json('data.1.description')
         );
     }
 }
