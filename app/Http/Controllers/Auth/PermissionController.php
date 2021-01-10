@@ -13,6 +13,14 @@ class PermissionController extends Controller
         $this->middleware('auth');
     }
 
+    public function index(Request $request) {
+        $request->user()->isAuthorized(['permissions_index']);
+
+        $permissions = Permission::latest()->get();
+
+        return response()->json(compact('permissions'));
+    }
+
     public function store(Request $request)
     {
         $request->user()->isAuthorized(['permissions_store']);

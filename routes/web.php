@@ -18,6 +18,7 @@ use App\Http\Controllers\Auth\PermissionController;
 
 Auth::routes();
 
+Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
 Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
 
 
