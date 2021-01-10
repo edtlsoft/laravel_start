@@ -1,9 +1,10 @@
 const mix = require('laravel-mix');
 
+const publicPath = 'public'
 
 const cleanFolderJs = () => {
     const fs = require('fs');
-    const path_js = path.resolve(__dirname, 'public_html/js/')
+    const path_js = path.resolve(__dirname, `${publicPath}/js/`)
     const excludes_files = ['login.js'];
 
     fs.readdir(path_js, function (err, files) {
@@ -32,7 +33,7 @@ mix.webpackConfig({
 });
 
 
-// mix.setPublicPath('public_html/');
+// mix.setPublicPath(publicPath);
 
 
 if (mix.inProduction()) {

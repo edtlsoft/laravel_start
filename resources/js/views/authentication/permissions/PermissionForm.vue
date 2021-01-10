@@ -51,55 +51,25 @@
 </template>
 
 <script>
-    import { mapGetters, mapMutations } from 'vuex'
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default {
-        data: () => {
-            return({
-                isUpdate: false, 
-                permission: {
-                    name: '',
-                    description: '',
-                }
-            })
-        },
         computed: {
             ...mapGetters({
-                openPermissionsForm: 'permissions/getOpenPermissionsForm'
+                updateMode: 'permissions/form/getUpdateMode',
+                permission: 'permissions/form/getPermission',
             }),
             title() {
-                return this.isUpdate ? 'ACTUALIZAR PERMISO' : 'REGISTRAR PERMISO'
-            }
-        },
-        watch: {
-            openPermissionsForm(newVal) {
-                if( newVal ) {
-                    $('div#modal-permission-form').modal()
-                    this.setOpenPermissionsForm(false)
-                }
+                return this.updateMode ? 'ACTUALIZAR PERMISO' : 'REGISTRAR PERMISO'
             }
         },
         methods: {
             ...mapMutations({
-                setOpenPermissionsForm: 'permissions/setOpenPermissionsForm',
                 addPermissionToList: 'permissions/addPermissionToList',
             }),
-            submitPermissionForm() {
-                axios.post('/permissions', this.permission)
-                    .then(response => {
-                        this.addPermissionToList(response.data)
-                        
-                        Swal.fire({
-                            title: 'El permiso se registro correctamente.',
-                            icon: 'success'
-                        })
-                        .then(() => this.modalHidden())
-                    })
-                    .catch(error => console.log(error))
-            },
-            modalHidden() {
-                $('div#modal-permission-form').modal('hide')
-            }
+            ...mapActions({
+                submitPermissionForm: 'permissions/form/submitPermissionForm'
+            }),
         }
     }
 </script>

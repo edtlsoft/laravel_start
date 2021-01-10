@@ -13,6 +13,16 @@ files.keys().map(file => {
     })
 })
 
+// Mixins
+let mixins = {}
+
+const mixinsFiles = require.context('../mixins', true, /(?<!index)\.js$/i)
+
+mixinsFiles.keys().map(mixin => {
+    Object.assign(mixins, mixinsFiles(mixin).default)
+})
+
+
 export default new Vuex.Store({
     // strict: true,
     state: {
@@ -39,4 +49,5 @@ export default new Vuex.Store({
         }
     },
     modules,
+    mixins,
 })

@@ -30,7 +30,7 @@
                                     <div>
                                         <button class="btn btn-primary" 
                                             dusk="btn-permissions-form" 
-                                            @click="openForm()"
+                                            @click="openPermissionForm()"
                                         >
                                             <i class="fa fa-plus"></i> Permiso
                                         </button>
@@ -81,15 +81,15 @@
         computed: {
             ...mapGetters({
                 permissions: 'permissions/getPermissions',
-                openPermissionsForm: 'permissions/getOpenPermissionsForm'
             })
         },
         methods: {
             ...mapMutations({
-                setOpenPermissionsForm: 'permissions/setOpenPermissionsForm'
+                setUpdateMode: 'permissions/form/setUpdateMode'
             }),
-            openForm() {
-                this.setOpenPermissionsForm(true)
+            openPermissionForm() {
+                this.setUpdateMode(false)
+                this.openModal('div#modal-permission-form')
             }
         }
     }
