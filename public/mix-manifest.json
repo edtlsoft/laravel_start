@@ -1,23 +1,6 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/Autentication.Permissions.efcad5d84d1f9f2c3aa5.js": "/js/Autentication.Permissions.efcad5d84d1f9f2c3aa5.js",
-    "/js/Dashboard.fea39be2287c55647a40.js": "/js/Dashboard.fea39be2287c55647a40.js",
-    "/js/Autentication.Permissions.6c3d575ff357f956f82e.js": "/js/Autentication.Permissions.6c3d575ff357f956f82e.js",
-    "/js/Autentication.Permissions.ff7d70814baf56a815e1.js": "/js/Autentication.Permissions.ff7d70814baf56a815e1.js",
-    "/js/Autentication.Permissions.aa311f4010e716f1e309.js": "/js/Autentication.Permissions.aa311f4010e716f1e309.js",
-    "/js/Autentication.Permissions.0ff533f4703a160e0524.js": "/js/Autentication.Permissions.0ff533f4703a160e0524.js",
-    "/js/Autentication.Permissions.441f4df3760d850be71d.js": "/js/Autentication.Permissions.441f4df3760d850be71d.js",
-    "/js/Autentication.Permissions.da74809b2e5c299d6dcf.js": "/js/Autentication.Permissions.da74809b2e5c299d6dcf.js",
-    "/js/Autentication.Permissions.83c54bd32c850ab5e73c.js": "/js/Autentication.Permissions.83c54bd32c850ab5e73c.js",
-    "/js/Autentication.Permissions.d5f63f7c0fb382b30bc5.js": "/js/Autentication.Permissions.d5f63f7c0fb382b30bc5.js",
-    "/js/Autentication.Permissions.4225dec604d302d9e131.js": "/js/Autentication.Permissions.4225dec604d302d9e131.js",
-    "/js/Autentication.Permissions.95a6780cdd5c693416c9.js": "/js/Autentication.Permissions.95a6780cdd5c693416c9.js",
-    "/js/Autentication.Permissions.6f46ef960f24eff03f84.js": "/js/Autentication.Permissions.6f46ef960f24eff03f84.js",
-    "/js/Autentication.Permissions.372d575802929fe0d6ea.js": "/js/Autentication.Permissions.372d575802929fe0d6ea.js",
-    "/js/Autentication.Permissions.602870ee8a0c06be0a72.js": "/js/Autentication.Permissions.602870ee8a0c06be0a72.js",
-    "/js/Autentication.Permissions.4f1b3fc54d83bf4cb567.js": "/js/Autentication.Permissions.4f1b3fc54d83bf4cb567.js",
-    "/js/Autentication.Permissions.c7964aa27b9926d0895d.js": "/js/Autentication.Permissions.c7964aa27b9926d0895d.js",
-    "/js/Autentication.Permissions.3dd70d3051b1facd32d8.js": "/js/Autentication.Permissions.3dd70d3051b1facd32d8.js",
-    "/js/Autentication.Permissions.572034508a9b1797ea2b.js": "/js/Autentication.Permissions.572034508a9b1797ea2b.js"
+    "/js/app.js": "/js/app.js?id=0361116a1f496ceaebf0",
+    "/css/app.css": "/css/app.css?id=105969dc0838977fcd73",
+    "/js/Autentication.Permissions.3a98cb98108eda2243c1.js": "/js/Autentication.Permissions.3a98cb98108eda2243c1.js?id=85179c71db779e320929",
+    "/js/Dashboard.d56f0a19fe39e6cc504d.js": "/js/Dashboard.d56f0a19fe39e6cc504d.js?id=43f9e89a01742c4d9cbd"
 }

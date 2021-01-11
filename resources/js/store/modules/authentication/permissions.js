@@ -2,9 +2,25 @@ export default {
     namespaced: true,
     state: {
         permissions: [],
+        datatable: null,
+        datatableSettings: {
+            ajax: {
+                url: '/permissions',
+            },
+            columns: [
+                { data: 'id', },
+                { data: 'name', },
+                { data: 'description', },
+                { data: 'created_at', render: function(data){
+                    return `Fecha: ${data}`
+                } },
+            ],
+        }
     },
     getters: {
         getPermissions: state => state.permissions,
+        getDatatable: state => state.datatable,
+        getDatatableSettings: state => state.datatableSettings,
     },
     mutations: {
         addPermissionToList(state, permission) {
@@ -12,7 +28,10 @@ export default {
         },
         setPermissions(state, permissions) {
             state.permissions = permissions
-        }
+        },
+        setDatatable(state, datatable){
+            state.datatable = datatable
+        },
     },
     modules: {
         form: {

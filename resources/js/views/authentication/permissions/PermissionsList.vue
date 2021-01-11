@@ -81,11 +81,14 @@
         computed: {
             ...mapGetters({
                 permissions: 'permissions/getPermissions',
+                datatable: 'permissions/getDatatable',
+                datatableSettings: 'permissions/getDatatableSettings',
             })
         },
         methods: {
             ...mapMutations({
-                setUpdateMode: 'permissions/form/setUpdateMode'
+                setDatatable: 'permissions/setDatatable',
+                setUpdateMode: 'permissions/form/setUpdateMode',
             }),
             ...mapActions({
                 loadPermissionsList: 'permissions/loadPermissionsList'
@@ -96,22 +99,9 @@
             }
         },
         mounted() {
-            $('table#table-permissions-list').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '/permissions'
-                },
-                columns: [
-                    { data: 'id', },
-                    { data: 'name', },
-                    { data: 'description', },
-                    { data: 'created_at', },
-                ],
-                responsive: {
-                    orthogonal: 'responsive'
-                }
-            });
+            let datatable = this.loadDatatable('table#table-permissions-list', this.datatableSettings)
+
+            this.setDatatable(datatable)
         },
     }
 </script>
