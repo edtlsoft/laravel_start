@@ -23,3 +23,9 @@ $fa-font-path: "../webfonts";
     padding-right: 1rem;
     padding-left: 1rem;
 }
+
+// Datatables Bootstrap
+@import "~datatables.net-bs4/css/dataTables.bootstrap4.min.css";
+
+// DataTables Responsive Bootstrap
+@import "~datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css";

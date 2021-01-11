@@ -5,14 +5,13 @@ export default {
     },
     getters: {
         getPermissions: state => state.permissions,
-        getPermissionForm: state => state.permissionForm,
     },
     mutations: {
         addPermissionToList(state, permission) {
             state.permissions.unshift(permission)
         },
-        setPermissionFormUpdateMode(state, value) {
-            state.permissionForm.updateMode = value
+        setPermissions(state, permissions) {
+            state.permissions = permissions
         }
     },
     modules: {

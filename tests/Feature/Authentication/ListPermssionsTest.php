@@ -20,9 +20,6 @@ class ListPermssionsTest extends TestCase
         $permission_five = Permission::factory()->create(['created_at' => now()->addMinutes(3)]);
 
         $response = $this->actingAs($user)->getJson(route('permissions.index'));
-        // dd(
-        //     json_decode($response->getContent())
-        // );
 
         $response->assertStatus(200);
 

@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-hover">
+                                <table class="table table-bordered table-hover" id="table-permissions-list">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
@@ -47,14 +47,14 @@
                                             <th>Fecha de creación</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr v-for="permission in permissions" :key="permission.id">
-                                            <td v-text="permission.id"></td>
-                                            <td v-text="permission.name"></td>
-                                            <td v-text="permission.description"></td>
-                                            <td v-text="permission.created_at"></td>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Nombre</th>
+                                            <th>Description</th>
+                                            <th>Fecha de creación</th>
                                         </tr>
-                                    </tbody>
+                                    </tfoot>
                                 </table>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-    import { mapGetters, mapMutations } from 'vuex'
+    import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     import PermissionForm from './PermissionForm';
 
@@ -87,10 +87,31 @@
             ...mapMutations({
                 setUpdateMode: 'permissions/form/setUpdateMode'
             }),
+            ...mapActions({
+                loadPermissionsList: 'permissions/loadPermissionsList'
+            }),
             openPermissionForm() {
                 this.setUpdateMode(false)
                 this.openModal('div#modal-permission-form')
             }
-        }
+        },
+        mounted() {
+            $('table#table-permissions-list').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '/permissions'
+                },
+                columns: [
+                    { data: 'id', },
+                    { data: 'name', },
+                    { data: 'description', },
+                    { data: 'created_at', },
+                ],
+                responsive: {
+                    orthogonal: 'responsive'
+                }
+            });
+        },
     }
 </script>

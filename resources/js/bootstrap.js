@@ -27,6 +27,17 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // SweetAlert2
 window.Swal = require('sweetalert2');
 
+// Datatables
+require('datatables.net')
+
+// Datatables Bootstrap
+require('datatables.net-bs4')
+
+//DataTables Responsive
+require('datatables.net-responsive');
+
+//DataTables Responsive Bootstrap
+require('datatables.net-responsive-bs4');
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
