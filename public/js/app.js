@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"b7c4eb4962eb35844843","Dashboard":"fea39be2287c55647a40"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"b7c4eb4962eb35844843","Dashboard":"ff0e425e8f27162bca63"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

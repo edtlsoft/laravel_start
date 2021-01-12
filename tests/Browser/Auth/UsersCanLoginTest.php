@@ -24,7 +24,8 @@ class UsersCanLoginTest extends DuskTestCase
                 ->type('username', 'edward@edtlsoft.com')
                 ->type('password', 'password')
                 ->press('@btn-login')
-                ->pause(1000)
+                ->waitForText('Dashboard')
+                ->assertSee('Dashboard')
                 ->assertPathIs('/')
                 ->assertAuthenticatedAs($user);
         });
@@ -43,7 +44,8 @@ class UsersCanLoginTest extends DuskTestCase
                 ->type('username', 'edward')
                 ->type('password', 'password')
                 ->press('@btn-login')
-                ->pause(1000)
+                ->waitForText('Dashboard')
+                ->assertSee('Dashboard')
                 ->assertPathIs('/')
                 ->assertAuthenticatedAs($user);
         });
