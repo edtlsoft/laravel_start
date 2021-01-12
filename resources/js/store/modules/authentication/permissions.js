@@ -12,7 +12,7 @@ export default {
                 { data: 'name', },
                 { data: 'description', },
                 { data: 'created_at', render: function(data){
-                    return `Fecha: ${data}`
+                    return moment(data).format('YYYY-MM-DD hh:mm:ss A')
                 } },
             ],
         }

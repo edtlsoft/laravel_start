@@ -39,6 +39,12 @@ require('datatables.net-responsive');
 //DataTables Responsive Bootstrap
 require('datatables.net-responsive-bs4');
 
+// Moment JS
+window.moment = require('moment');
+moment.locale('es');
+
+
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
