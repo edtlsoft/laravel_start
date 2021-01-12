@@ -11,7 +11,7 @@ abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication;
     
-    public function create_user(array $user, array $role, array $permission)
+    public function create_user(array $user=[], array $role=[], array $permission=[])
     {
         $permission = Permission::factory()->create($permission);
         $role = Role::factory()->create($role);
