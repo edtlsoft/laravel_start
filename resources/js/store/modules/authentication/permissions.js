@@ -23,15 +23,17 @@ export default {
         getDatatableSettings: state => state.datatableSettings,
     },
     mutations: {
-        addPermissionToList(state, permission) {
-            state.permissions.unshift(permission)
-        },
         setPermissions(state, permissions) {
             state.permissions = permissions
         },
         setDatatable(state, datatable){
             state.datatable = datatable
         },
+    },
+    actions: {
+        redrawDatatable({state}) {
+            state.datatable.draw()
+        }
     },
     modules: {
         form: {
@@ -52,14 +54,14 @@ export default {
                 setPermission: (state, permission) => state.updateMode = permission,
             },
             actions: {
-                submitPermissionForm({getters, commit}) {
+                submitPermissionForm({getters, dispatch}) {
                     let interceptor = mixins.axios.methods.setInterceptorAxios(
                         getters.updateMode ? 'Actulizando datos del permiso' : 'Registrando datos del permiso'
                     )
 
                     axios.post('/permissions', getters.getPermission)
                         .then(response => {
-                            commit('permissions/addPermissionToList', response.data, {root: true})
+                            dispatch('permissions/redrawDatatable', null, {root: true})
                             
                             Swal.fire({icon: 'success', title: 'El permiso se registro correctamente.'})
                                 .then(() => mixins.modals.methods.closeModal('div#modal-permission-form'))

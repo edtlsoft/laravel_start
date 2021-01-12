@@ -64,9 +64,6 @@
             }
         },
         methods: {
-            ...mapMutations({
-                addPermissionToList: 'permissions/addPermissionToList',
-            }),
             ...mapActions({
                 submitPermissionForm: 'permissions/form/submitPermissionForm'
             }),

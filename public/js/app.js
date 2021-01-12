@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"b7c4eb4962eb35844843","Dashboard":"ff0e425e8f27162bca63"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + ({"Autentication.Permissions":"Autentication.Permissions","Dashboard":"Dashboard"}[chunkId]||chunkId) + "." + {"Autentication.Permissions":"6a064e5e50839b6a312e","Dashboard":"ff0e425e8f27162bca63"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -96877,14 +96877,17 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mutations: {
-    addPermissionToList: function addPermissionToList(state, permission) {
-      state.permissions.unshift(permission);
-    },
     setPermissions: function setPermissions(state, permissions) {
       state.permissions = permissions;
     },
     setDatatable: function setDatatable(state, datatable) {
       state.datatable = datatable;
+    }
+  },
+  actions: {
+    redrawDatatable: function redrawDatatable(_ref) {
+      var state = _ref.state;
+      state.datatable.draw();
     }
   },
   modules: {
@@ -96914,12 +96917,12 @@ __webpack_require__.r(__webpack_exports__);
         }
       },
       actions: {
-        submitPermissionForm: function submitPermissionForm(_ref) {
-          var getters = _ref.getters,
-              commit = _ref.commit;
+        submitPermissionForm: function submitPermissionForm(_ref2) {
+          var getters = _ref2.getters,
+              dispatch = _ref2.dispatch;
           var interceptor = mixins.axios.methods.setInterceptorAxios(getters.updateMode ? 'Actulizando datos del permiso' : 'Registrando datos del permiso');
           axios.post('/permissions', getters.getPermission).then(function (response) {
-            commit('permissions/addPermissionToList', response.data, {
+            dispatch('permissions/redrawDatatable', null, {
               root: true
             });
             Swal.fire({
