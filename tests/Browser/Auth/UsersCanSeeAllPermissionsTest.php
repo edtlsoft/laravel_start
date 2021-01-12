@@ -7,7 +7,7 @@ use Laravel\Dusk\Browser;
 use App\Models\Permission;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class SuperAdministratorUsersCanSeeAllPermissionsTest extends DuskTestCase
+class UsersCanSeeAllPermissionsTest extends DuskTestCase
 {
     use DatabaseMigrations;
 
