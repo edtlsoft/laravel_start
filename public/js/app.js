@@ -97473,7 +97473,7 @@ __webpack_require__.r(__webpack_exports__);
       var message = 'Ocurrio un error desconocido al intentar realizar la peticion, intentelo nuevamente.';
 
       if (error !== null && error !== void 0 && error.message || error !== null && error !== void 0 && (_error$response = error.response) !== null && _error$response !== void 0 && _error$response.data) {
-        message = getMessageErrorHttp(error, message);
+        message = this.getMessageErrorHttp(error, message);
       }
 
       sweetalert2__WEBPACK_IMPORTED_MODULE_0___default.a.fire({
@@ -97482,19 +97482,21 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getMessageErrorHttp: function getMessageErrorHttp(error, message) {
-      if (error.message) {
+      var _error$response2;
+
+      if ((_error$response2 = error.response) !== null && _error$response2 !== void 0 && _error$response2.data) {
+        var _error$response3, _error$response3$data;
+
+        if ((_error$response3 = error.response) !== null && _error$response3 !== void 0 && (_error$response3$data = _error$response3.data) !== null && _error$response3$data !== void 0 && _error$response3$data.errors) {
+          message = error.response.data.errors[Object.keys(error.response.data.errors)[0]][0];
+        } else {
+          message = error.response.data.message || message;
+        }
+      } else {
         if (error.message === 'Network Error') {
           message = 'Error al intentar establecer conexión con el servidor, revise su conexión de internet y vuelva a intentarlo.';
         } else {
           message = "Ocurrio un error inesperado, \"".concat(error.message, "\", si el error persiste comuniquese con el administrador de sistemas.");
-        }
-      } else {
-        var _error$reponse, _error$reponse$data;
-
-        if ((_error$reponse = error.reponse) !== null && _error$reponse !== void 0 && (_error$reponse$data = _error$reponse.data) !== null && _error$reponse$data !== void 0 && _error$reponse$data.errors) {
-          message = error.reponse.data.errors[Object.keys(error.reponse.data.errors)[0]][0];
-        } else {
-          message = error.response.data.message || message;
         }
       }
 
