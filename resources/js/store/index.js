@@ -26,10 +26,10 @@ mixinsFiles.keys().map(mixin => {
 export default new Vuex.Store({
     // strict: true,
     state: {
-        userAuthenticated: {}
+        userAuthenticated: null,
     },
     getters: {
-        userAuthenticated: (state) => state.userAuthenticated,
+        getUserAuthenticated: (state) => state.userAuthenticated,
     },
     mutations: {
         setUserAuthenticated(state, user) {
@@ -37,15 +37,13 @@ export default new Vuex.Store({
         },
     },
     actions: {
-        getUserAuthenticated(context) {
-            axios.get('/users/authenticated')
-                .then(response => {
-                    context.commit('setUserAuthenticated', response.data.data)
-                })
-                .catch(error => {
-                    alert('No estas logueado')
-                    window.location = '/login'
-                })
+        async loadUserAuthenticated(context) {
+            try {
+                let response = await axios.get('/users/authenticated')
+                context.commit('setUserAuthenticated', response.data.data)
+            } catch (error) {
+                window.location = '/login'
+            }
         }
     },
     modules,

@@ -15,4 +15,7 @@ const app = new Vue({
     el: '#app',
     router,
     store,
+    created(){
+        this.$store.dispatch('loadUserAuthenticated')
+    }
 });

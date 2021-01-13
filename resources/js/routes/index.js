@@ -8,6 +8,12 @@ let routes = [{
     component: () => import(/* webpackChunkName: "Dashboard" */ '@/views/Dashboard.vue') 
 }]
 
+window.requireAuthentication = async function(to, from, next) {
+    let response = await mixins.authentication.methods.isAuthorized(to.meta.permissions)
+
+    return response ? next() : next('/login')
+}
+
 const modules = require.context('./modules', true, /\.js$/i)
 
 modules.keys().map(module => {
