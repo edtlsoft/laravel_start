@@ -15,6 +15,6 @@ class UserController extends Controller
 
     public function show(Request $request)
     {
-        return UserResource::make($request->user());
+        return UserResource::make($request->user()->with('roles.permissions'));
     }
 }

@@ -15,7 +15,7 @@ class UserResourceTest extends TestCase
     public function an_user_resource_must_have_the_necessary_fields()
     {
         // Given
-        $user = User::factory()->create();
+        $user = $this->create_user();
 
         // When
         $userResource = UserResource::make($user)->resolve();
@@ -34,6 +34,15 @@ class UserResourceTest extends TestCase
         $this->assertEquals(
             $user->email,
             $userResource['email']
+        );
+
+        $this->assertEquals(
+            $user->roles,
+            $userResource['roles']
+        );
+        $this->assertEquals(
+            $user->roles->first()->permissions,
+            $userResource['roles'][0]['permissions']
         );
     }
 }
