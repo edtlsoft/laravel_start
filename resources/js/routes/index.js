@@ -11,7 +11,7 @@ let routes = [{
 window.requireAuthentication = async function(to, from, next) {
     let response = await mixins.authentication.methods.isAuthorized(to.meta.permissions)
 
-    return response ? next() : next('/login')
+    return response ? next() : next('/')
 }
 
 const modules = require.context('./modules', true, /\.js$/i)

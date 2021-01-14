@@ -13,27 +13,22 @@ files.keys().map(file => {
     })
 })
 
-// Mixins
-let mixins = {}
-
-const mixinsFiles = require.context('../mixins', true, /(?<!index)\.js$/i)
-
-mixinsFiles.keys().map(mixin => {
-    Object.assign(mixins, mixinsFiles(mixin).default)
-})
-
-
 export default new Vuex.Store({
     // strict: true,
     state: {
         userAuthenticated: null,
+        userPermissions: null,
     },
     getters: {
         getUserAuthenticated: (state) => state.userAuthenticated,
+        getUserPermissions: (state) => state.userPermissions,
     },
     mutations: {
         setUserAuthenticated(state, user) {
             state.userAuthenticated = user
+        },
+        setUserPermissions(state, permissions) {
+            state.userPermissions = permissions
         },
     },
     actions: {
@@ -41,11 +36,22 @@ export default new Vuex.Store({
             try {
                 let response = await axios.get('/users/authenticated')
                 context.commit('setUserAuthenticated', response.data.data)
+                context.dispatch('loadUserPermissions')
             } catch (error) {
-                window.location = '/login'
+                window.location = '/login?loadUserAuthenticated=false'
             }
+        },
+        loadUserPermissions(context) {
+            let permissions = []
+
+            for(let role of context.getters.getUserAuthenticated.roles ) {
+                permissions = permissions.concat(
+                    role.permissions.map(permission => permission.name)
+                )
+            }
+
+            context.commit('setUserPermissions', permissions)
         }
     },
     modules,
-    mixins,
 })

@@ -35,4 +35,23 @@ class UsersCanSeeAllPermissionsTest extends DuskTestCase
             }
         });
     }
+
+    /**
+     * @test
+     * @throws Throwable
+     */
+    public function unauthorized_users_can_not_see_all_permissions()
+    {
+        $user = $this->create_user();
+
+        Permission::factory()->count(5)->create();
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                ->visit('/authentication/permissions')
+                ->waitForText('Dashboard')
+                ->assertSee('Dashboard')
+                ;
+        });
+    }
 }

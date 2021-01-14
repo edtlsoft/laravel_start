@@ -6,7 +6,7 @@ use App\Models\Permission;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ListPermssionsTest extends TestCase
+class ListPermissionsTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,7 +15,7 @@ class ListPermssionsTest extends TestCase
     {
         $user = $this->create_user([], ['name' => 'Super Administrator'], ['name' => 'super_administrator']);
 
-        $permissions     = Permission::factory()->count(3)->create();
+        Permission::factory()->count(3)->create();
         $permission_four = Permission::factory()->create(['created_at' => now()->addMinutes(2)]);
         $permission_five = Permission::factory()->create(['created_at' => now()->addMinutes(3)]);
 
@@ -31,5 +31,17 @@ class ListPermssionsTest extends TestCase
             $permission_four->description,
             $response->json('data.1.description')
         );
+    }
+
+    /** @test */
+    public function unauthorized_users_can_not_see_all_permissions()
+    {
+        $user = $this->create_user();
+        Permission::factory()->count(3)->create();
+        $permission = ['name' => 'permission_one', 'description' => 'Permission number one'];
+
+        $response = $this->actingAs($user)->postJson(route('permissions.store'), $permission);
+
+        $response->assertStatus(401);
     }
 }

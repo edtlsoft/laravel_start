@@ -29,8 +29,8 @@ export default {
         },
         async hasPermission(permission){
             await this.validateUserDataExists();
-            
-            return true
+
+            return store.getters.getUserPermissions.includes(permission)
         },
         async validateUserDataExists() {
             if( store.getters.getUserAuthenticated ){
