@@ -34,4 +34,18 @@ class CanUpdatePermissionsTest extends TestCase
             $permissionUpdated
         );
     }
+
+    /** @test */
+    public function unauthorized_users_can_not_create_permissions()
+    {
+        $user = $this->create_user();
+        
+        $permission = Permission::factory()->create();
+
+        $permissionUpdated = ['name' => 'permission_updated', 'description' => 'Description...'];
+
+        $response = $this->actingAs($user)->putJson(route('permissions.update', $permission), $permissionUpdated);
+
+        $response->assertStatus(401);
+    }
 }
