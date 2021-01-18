@@ -29,4 +29,13 @@ class PermissionController extends Controller
 
         return response()->json($permission);
     }
+
+    public function update(Request $request, Permission $permission)
+    {
+        $request->user()->isAuthorized(['permissions_update']);
+
+        $permission->update($request->all());
+
+        return response()->json(compact('permission'));
+    }
 }

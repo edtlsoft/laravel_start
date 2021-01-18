@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Auth;
+namespace Tests\Browser\Authentication;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;

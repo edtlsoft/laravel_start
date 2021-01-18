@@ -44,5 +44,8 @@ export default {
 
             return $(tableId).DataTable(settings);
         },
+        filterArrayDataForId(arrayData, id) {
+            return arrayData.find(data => data.id === id)
+        },
     }
 }

@@ -3,19 +3,7 @@ export default {
     state: {
         permissions: [],
         datatable: null,
-        datatableSettings: {
-            ajax: {
-                url: '/permissions',
-            },
-            columns: [
-                { data: 'id', },
-                { data: 'name', },
-                { data: 'description', },
-                { data: 'created_at', render: function(data){
-                    return moment(data).format('YYYY-MM-DD hh:mm:ss A')
-                } },
-            ],
-        }
+        datatableSettings: {},
     },
     getters: {
         getPermissions: state => state.permissions,
@@ -29,11 +17,14 @@ export default {
         setDatatable(state, datatable){
             state.datatable = datatable
         },
+        setDatatableSettings(state, settings) {
+            state.datatableSettings = settings
+        }
     },
     actions: {
-        redrawDatatable({state}) {
-            state.datatable.draw()
-        }
+        ajaxReloadDatatable({state}, resetPaging) {
+            state.datatable.ajax.reload(null, resetPaging)
+        },
     },
     modules: {
         form: {
@@ -51,20 +42,30 @@ export default {
             },
             mutations: {
                 setUpdateMode: (state, value) => state.updateMode = value,
-                setPermission: (state, permission) => state.updateMode = permission,
+                setPermission: (state, permission) => state.permission = permission,
             },
             actions: {
-                submitPermissionForm({getters, dispatch}) {
+                submitPermissionForm({state, getters, commit, dispatch}) {
+                    let updateMode = state.updateMode
+
                     let interceptor = mixins.axios.methods.setInterceptorAxios(
-                        getters.updateMode ? 'Actulizando datos del permiso' : 'Registrando datos del permiso'
+                        updateMode ? 'Actulizando datos del permiso' : 'Registrando datos del permiso'
                     )
 
-                    axios.post('/permissions', getters.getPermission)
-                        .then(response => {
-                            dispatch('permissions/redrawDatatable', null, {root: true})
+                    let method = updateMode ? 'put' : 'post'
+                    let route = updateMode ? `/permissions/${state.permission.id}` : '/permissions'
+
+                    axios[method](route, state.permission)
+                        .then(() => {
+                            dispatch('permissions/ajaxReloadDatatable', !updateMode, {root: true})
+
+                            let message = updateMode ? 'El permiso se actualizo correctamente.' : 'El permiso se registro correctamente.'
                             
-                            Swal.fire({icon: 'success', title: 'El permiso se registro correctamente.'})
-                                .then(() => mixins.modals.methods.closeModal('div#modal-permission-form'))
+                            Swal.fire({icon: 'success', title: message})
+                                .then(() => {
+                                    mixins.modals.methods.closeModal('div#modal-permission-form')
+                                    commit('setPermission', {name: '', description: ''})
+                                })
                         })
                         .catch(error => mixins.axios.methods.showErrorHttpAxios(error))
 

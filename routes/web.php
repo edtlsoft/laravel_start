@@ -20,6 +20,7 @@ Auth::routes();
 
 Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
 Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
+Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
 
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 

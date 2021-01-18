@@ -1,7 +1,7 @@
 <?php
 namespace App\Traits;
 
-use phpDocumentor\Reflection\Types\Boolean;
+use Illuminate\Support\Facades\Log;
 
 Trait HasRolesAndPermissionsTrait {
 
@@ -18,7 +18,7 @@ Trait HasRolesAndPermissionsTrait {
         if( $this->hasAnyPermission($permissions) ){
             return true;
         }
-
+        
         return abort(401, 'No tiene permisos para realizar esta acción, si cree que pueda ser un error del sistema comuníquese con el administrador.');
     }
 

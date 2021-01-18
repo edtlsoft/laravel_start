@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Browser\Auth;
+namespace Tests\Browser\Authentication;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
