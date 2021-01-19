@@ -35,4 +35,27 @@ class UsersCanDeletePermissionsTest extends DuskTestCase
         });
     }
 
+    /**
+     * @test
+     * @throws Throwable
+     */
+    public function unauthorized_users_can_not_delete_permissions()
+    {
+        $user = $this->create_user([], [], ['name' => 'permissions_index']);
+
+        $permission = Permission::factory()->create(['name' => 'permission_to_delete', 'created_at' => now()->addMinute()]);
+
+        $this->browse(function (Browser $browser) use ($user, $permission) {
+            $browser->loginAs($user)
+                ->visit('/authentication/permissions')
+                ->waitFor('.btn-permissions-delete')
+                ->click('.btn-permissions-delete')
+                ->waitForText("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
+                ->assertSee("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
+                ->click('.swal2-confirm')
+                ->waitForText('No tiene permisos para realizar esta acción, si cree que pueda ser un error del sistema comuníquese con el administrador.')
+                ->assertSee('No tiene permisos para realizar esta acción, si cree que pueda ser un error del sistema comuníquese con el administrador.')
+                ;
+        });
+    }
 }

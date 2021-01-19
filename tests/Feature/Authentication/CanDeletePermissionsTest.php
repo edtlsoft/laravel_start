@@ -28,4 +28,18 @@ class CanDeletePermissionsTest extends TestCase
             $permission->toArray()
         );
     }
+
+    /** @test */
+    public function unauthorized_users_can_not_delete_permissions()
+    {
+        $user = $this->create_user();
+        
+        $permission = Permission::factory()->create();
+
+        $response = $this->actingAs($user)->putJson(
+            route('permissions.destroy', $permission)
+        );
+
+        $response->assertStatus(401);
+    }
 }
