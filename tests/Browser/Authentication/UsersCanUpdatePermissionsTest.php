@@ -24,8 +24,8 @@ class UsersCanUpdatePermissionsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                 ->visit('/authentication/permissions')
-                ->waitFor('@btn-permissions-update')
-                ->click('@btn-permissions-update')
+                ->waitFor('.btn-permissions-update')
+                ->click('.btn-permissions-update')
                 ->whenAvailable('#modal-permission-form', function ($modal) {
                     $modal->assertSee('ACTUALIZAR PERMISO')
                         ->type('@permission-name', 'permission_updated')
@@ -53,8 +53,8 @@ class UsersCanUpdatePermissionsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                 ->visit('/authentication/permissions')
-                ->waitFor('@btn-permissions-update')
-                ->click('@btn-permissions-update')
+                ->waitFor('.btn-permissions-update')
+                ->click('.btn-permissions-update')
                 ->whenAvailable('#modal-permission-form', function ($modal) {
                     $modal->assertSee('ACTUALIZAR PERMISO')
                         ->type('@permission-name', 'permission_updated')

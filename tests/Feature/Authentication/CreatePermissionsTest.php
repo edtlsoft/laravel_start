@@ -85,7 +85,6 @@ class CreatePermissionsTest extends TestCase
         ]);
         
         // Then
-        dump($response->getContent());
         $response->assertStatus(422);
 
         $response->assertJsonStructure(['message', 'errors' => ['name']]);
