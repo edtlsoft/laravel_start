@@ -2,6 +2,7 @@ export default {
     data() {
         return({
             settings: {
+                fixedHeader: true,
                 processing: true,
                 serverSide: true,
                 ajax: {

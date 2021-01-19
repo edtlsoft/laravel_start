@@ -39,6 +39,10 @@ require('datatables.net-responsive');
 //DataTables Responsive Bootstrap
 require('datatables.net-responsive-bs4');
 
+// DataTable Fixed Header
+require('datatables.net-fixedheader-bs4')
+
+
 // Moment JS
 window.moment = require('moment');
 moment.locale('es');

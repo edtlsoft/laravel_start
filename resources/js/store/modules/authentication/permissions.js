@@ -22,7 +22,7 @@ export default {
         }
     },
     actions: {
-        ajaxReloadDatatable({state}, resetPaging) {
+        ajaxReloadDatatable({state}, resetPaging=false) {
             state.datatable.ajax.reload(null, resetPaging)
         },
     },

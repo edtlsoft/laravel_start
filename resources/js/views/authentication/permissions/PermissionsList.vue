@@ -96,7 +96,7 @@
                 setPermission: 'permissions/form/setPermission',
             }),
             ...mapActions({
-                loadPermissionsList: 'permissions/loadPermissionsList',
+                ajaxReloadDatatable: 'permissions/ajaxReloadDatatable',
             }),
             openPermissionForm(updateMode=false, permission=null) {
                 this.setUpdateMode(updateMode)
@@ -171,6 +171,8 @@
                     
                     axios.delete(`/permissions/${permission.id}`)
                         .then(response => {
+                            this.ajaxReloadDatatable()
+
                             Swal.fire({
                                 title: 'El permiso se elimino correctamente de la base de datos.',
                                 icon: 'success',
