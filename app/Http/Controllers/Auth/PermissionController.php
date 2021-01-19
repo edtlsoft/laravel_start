@@ -38,4 +38,11 @@ class PermissionController extends Controller
 
         return response()->json(compact('permission'));
     }
+
+    public function destroy(Request $request, Permission $permission)
+    {
+        $request->user()->isAuthorized(['permissions_destroy']);
+
+        return $permission->delete();
+    }
 }

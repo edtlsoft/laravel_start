@@ -121,10 +121,10 @@
                             return `
                                 <div class="w-100 text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}" dusk="btn-permissions-update">
+                                        <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger">
+                                        <button class="btn btn-sm btn-danger btn-permissions-delete" data-id="${permissionId}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -139,7 +139,7 @@
                     ],
                 }
             },
-            activeButtonPermissionUpdate() {
+            listenPermissionUpdateButton() {
                 let self = this
                 
                 $(document).on('click', '.btn-permissions-update', function(){
@@ -148,6 +148,39 @@
                     self.openPermissionForm(true, permission)
                 })
             },
+            listenPermissionDeleteButton() {
+                let self = this
+                
+                $(document).on('click', '.btn-permissions-delete', function(){
+                    let permissionId = $(this).data('id')
+                    let permission = self.filterArrayDataForId(self.permissions, permissionId)
+                    self.openSwalWindowDeletePermission(permission)
+                })
+            },
+            openSwalWindowDeletePermission(permission){
+                Swal.fire({
+                    text: `¿Está realmente seguro de eliminar el permiso ${permission.name}?`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Si, eliminarlo!',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    let interceptor = this.setInterceptorAxios('Eliminando el permiso, espere un momento');
+                    
+                    axios.delete(`/permissions/${permission.id}`)
+                        .then(response => {
+                            Swal.fire({
+                                title: 'El permiso se elimino correctamente de la base de datos.',
+                                icon: 'success',
+                            })
+                        })
+                        .catch(error => this.showErrorHttpAxios(error))
+
+                    this.ejectInterceptorAxios(interceptor)
+                })
+            }
         },
         mounted() {
             let datatableSettings = this.loadDatatableSettings()
@@ -156,7 +189,8 @@
             let datatable = this.loadDatatable('table#table-permissions-list', this.datatableSettings)
             this.setDatatable(datatable)
 
-            this.activeButtonPermissionUpdate()
+            this.listenPermissionUpdateButton()
+            this.listenPermissionDeleteButton()
         },
     }
 </script>
