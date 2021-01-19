@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Authentication\StorePermissionRequest;
 
 class PermissionController extends Controller
 {
@@ -21,7 +22,7 @@ class PermissionController extends Controller
         return datatables()->eloquent($permissions)->toJson();
     }
 
-    public function store(Request $request)
+    public function store(StorePermissionRequest $request)
     {
         $request->user()->isAuthorized(['permissions_store']);
 
