@@ -37,10 +37,10 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <button type="submit" 
                         form="permission-form"
-                        class="btn btn-primary" 
+                        :class="classButton" 
                         dusk="btn-manage-permission"
                     >
-                        Guardar
+                        {{ textButton }}
                     </button>
                 </div>
             </div>
@@ -61,7 +61,13 @@
             }),
             title() {
                 return this.updateMode ? 'ACTUALIZAR PERMISO' : 'REGISTRAR PERMISO'
-            }
+            },
+            classButton(){
+                return this.updateMode ? 'btn btn-success' : 'btn btn-primary'
+            },
+            textButton(){
+                return this.updateMode ? 'Actualizar' : 'Guardar'
+            },
         },
         methods: {
             ...mapActions({

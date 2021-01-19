@@ -85,7 +85,7 @@
                 permissions: 'permissions/getPermissions',
                 datatable: 'permissions/getDatatable',
                 datatableSettings: 'permissions/getDatatableSettings',
-            })
+            }),
         },
         methods: {
             ...mapMutations({
@@ -98,6 +98,9 @@
             ...mapActions({
                 ajaxReloadDatatable: 'permissions/ajaxReloadDatatable',
             }),
+            getUpdatedListOfPermissions() {
+                return this.permissions
+            },
             openPermissionForm(updateMode=false, permission=null) {
                 this.setUpdateMode(updateMode)
                 permission ? this.setPermission(permission) : false
@@ -139,25 +142,11 @@
                     ],
                 }
             },
-            listenPermissionUpdateButton() {
-                let self = this
-                
-                $(document).on('click', '.btn-permissions-update', function(){
-                    let permissionId = $(this).data('id')
-                    let permission = self.filterArrayDataForId(self.permissions, permissionId)
-                    self.openPermissionForm(true, permission)
-                })
-            },
-            listenPermissionDeleteButton() {
-                let self = this
-                
-                $(document).on('click', '.btn-permissions-delete', function(){
-                    let permissionId = $(this).data('id')
-                    let permission = self.filterArrayDataForId(self.permissions, permissionId)
-                    self.openSwalWindowDeletePermission(permission)
-                })
+            openPermissionUpdateForm(permission) {
+                this.openPermissionForm(true, permission)
             },
             openSwalWindowDeletePermission(permission){
+                console.log(permission)
                 Swal.fire({
                     text: `¿Está realmente seguro de eliminar el permiso ${permission.name}?`,
                     icon: 'warning',
@@ -191,8 +180,10 @@
             let datatable = this.loadDatatable('table#table-permissions-list', this.datatableSettings)
             this.setDatatable(datatable)
 
-            this.listenPermissionUpdateButton()
-            this.listenPermissionDeleteButton()
+            console.log(this.permissions, this.permissions.length)
+
+            this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
+            this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
         },
     }
 </script>
