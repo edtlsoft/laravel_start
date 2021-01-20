@@ -166,9 +166,28 @@
         <!-- Sidebar Menu -->
         <nav class="mt-2">
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <!-- Add icons to the links using the .nav-icon class
-                 with font-awesome or any other icon font library -->
-            <li class="nav-item menu-open">
+            <!-- Add icons to the links using the .nav-icon class with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <router-link class="nav-link" to="/" exact-active-class="active">
+                <i class="nav-icon fas fa-tachometer-alt"></i>
+                <p>Dashboard</p>
+              </router-link>
+            </li>
+            <li class="nav-item" id="module-authetication">
+              <router-link class="nav-link" to="/authentication" active-class="active">
+                <i class="nav-icon fas fa-user-shield"></i>
+                <p>Autenticación <i class="right fas fa-angle-left"></i></p>
+              </router-link>
+              <ul class="nav nav-treeview">
+                <li class="nav-item" id="link-authentication-permissions">
+                  <router-link class="nav-link" to="/authentication/permissions" exact-active-class="active">
+                    <i class="fas fa-scroll"></i>
+                    <p>Permisos</p>
+                  </router-link>
+                </li>
+              </ul>
+            </li>
+            {{-- <li class="nav-item menu-open">
               <a href="#" class="nav-link active">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
@@ -190,16 +209,7 @@
                   </a>
                 </li>
               </ul>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-th"></i>
-                <p>
-                  Simple Link
-                  <span class="right badge badge-danger">New</span>
-                </p>
-              </a>
-            </li>
+            </li> --}}
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
