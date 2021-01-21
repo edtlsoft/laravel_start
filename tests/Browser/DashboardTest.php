@@ -31,4 +31,26 @@ class DashboardTest extends DuskTestCase
                 ;
         });
     }
+
+    /**
+     * @test
+     * @throws Throwable
+     */
+    public function users_can_see_and_enter_the_roles_module()
+    {
+        $user = $this->create_user([], [], ['name' => 'super_administrator']);
+
+        $this->browse(function (Browser $browser) use ($user) {
+            $browser->loginAs($user)
+                ->visit('/')
+                ->waitFor('#module-authetication')
+                ->click('#module-authetication')
+                ->assertSeeIn('#module-authetication', 'Autenticación')
+                ->assertSeeIn('#link-authentication-roles', 'Roles')
+                ->clickLink('Roles')
+                ->waitForText('Listado de Roles')
+                ->assertSee('Listado de Roles')
+                ;
+        });
+    }
 }

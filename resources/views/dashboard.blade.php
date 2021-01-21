@@ -185,6 +185,12 @@
                     <p>Permisos</p>
                   </router-link>
                 </li>
+                <li class="nav-item" id="link-authentication-roles">
+                  <router-link class="nav-link" to="/authentication/roles" exact-active-class="active">
+                    <i class="fas fa-user-tag"></i>
+                    <p>Roles</p>
+                  </router-link>
+                </li>
               </ul>
             </li>
             {{-- <li class="nav-item menu-open">
@@ -210,6 +216,12 @@
                 </li>
               </ul>
             </li> --}}
+            <li class="nav-item" id="logout-app">
+              <a class="nav-link" @click="logout()">
+                  <i class="nav-icon fas fa-power-off text-danger"></i> 
+                  <p>Cerrar sesión</p>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->
