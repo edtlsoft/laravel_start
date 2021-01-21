@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Resources\Auth;
+namespace Tests\Unit\Resources\Authentication;
 
 use Tests\TestCase;
-use App\Http\Resources\Auth\UserResource;
+use App\Http\Resources\Authentication\UserResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserResourceTest extends TestCase
