@@ -3,7 +3,6 @@
 namespace Tests\Unit\Resources\Auth;
 
 use Tests\TestCase;
-use App\Models\User;
 use App\Http\Resources\Auth\UserResource;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
