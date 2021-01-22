@@ -29,16 +29,16 @@
                                     <h5 class="m-0">Listado de Roles</h5>
                                     <div>
                                         <button class="btn btn-primary" 
-                                            dusk="btn-permissions-form" 
-                                            @click="openPermissionForm()"
+                                            dusk="btn-role-form" 
+                                            @click="openRoleForm()"
                                         >
-                                            <i class="fa fa-plus"></i> Permiso
+                                            <i class="fa fa-plus"></i> Role
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-hover" id="table-permissions-list">
+                                <table class="table table-bordered table-hover" id="table-roles-list">
                                     <thead>
                                         <tr>
                                             <th>Id</th>
@@ -48,6 +48,15 @@
                                             <th>Fecha de creación</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        <tr v-for="role in roles" :key="role.id">
+                                            <td>{{ role.id }}</td>
+                                            <td></td>
+                                            <td>{{ role.name }}</td>
+                                            <td>{{ role.description }}</td>
+                                            <td>{{ role.create_at }}</td>
+                                        </tr>
+                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>Id</th>
@@ -67,54 +76,54 @@
         </div>
         <!-- /.content -->
 
-        <!-- <PermissionForm /> -->
+        <RoleForm />
     </div>
 </template>
 
 <script>
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
-    // import PermissionForm from './PermissionForm';
+    import RoleForm from './RoleForm';
 
     export default {
-        // components: {
-        //     PermissionForm,
-        // },
+        components: {
+            RoleForm,
+        },
         computed: {
             ...mapGetters({
-                permissions: 'permissions/getPermissions',
-                datatable: 'permissions/getDatatable',
-                datatableSettings: 'permissions/getDatatableSettings',
+                roles: 'roles/getRoles',
+                datatable: 'roles/getDatatable',
+                datatableSettings: 'roles/getDatatableSettings',
             }),
         },
         methods: {
             ...mapMutations({
-                setPermissions: 'permissions/setPermissions',
-                setDatatable: 'permissions/setDatatable',
-                setDatatableSettings: 'permissions/setDatatableSettings',
-                setUpdateMode: 'permissions/form/setUpdateMode',
-                setPermission: 'permissions/form/setPermission',
+                setRoles: 'roles/setRoles',
+                setDatatable: 'roles/setDatatable',
+                setDatatableSettings: 'roles/setDatatableSettings',
+                setUpdateMode: 'roles/form/setUpdateMode',
+                setPermission: 'roles/form/setPermission',
             }),
             ...mapActions({
-                ajaxReloadDatatable: 'permissions/ajaxReloadDatatable',
+                ajaxReloadDatatable: 'roles/ajaxReloadDatatable',
             }),
-            getUpdatedListOfPermissions() {
-                return this.permissions
+            getUpdatedListOfRoles() {
+                return this.roles
             },
-            openPermissionForm(updateMode=false, permission=null) {
+            openRoleForm(updateMode=false, permission=null) {
                 this.setUpdateMode(updateMode)
                 permission ? this.setPermission(permission) : false
-                this.openModal('div#modal-permission-form')
+                this.openModal('div#modal-role-form')
             },
             loadDatatableSettings() {
                 let self = this
 
                 return {
                     ajax: {
-                        url: '/permissions',
+                        url: '/roles',
                         dataSrc: function(json){
                             let data = json.data
-                            self.setPermissions(data)
+                            self.setRoles(data)
                             return data
                         },
                     },
@@ -124,10 +133,10 @@
                             return `
                                 <div class="w-100 text-center">
                                     <div class="btn-group">
-                                        <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}">
+                                        <button class="btn btn-sm btn-primary btn-roles-update" data-id="${permissionId}">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button class="btn btn-sm btn-danger btn-permissions-delete" data-id="${permissionId}">
+                                        <button class="btn btn-sm btn-danger btn-roles-delete" data-id="${permissionId}">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -143,7 +152,7 @@
                 }
             },
             openPermissionUpdateForm(permission) {
-                this.openPermissionForm(true, permission)
+                this.openRoleForm(true, permission)
             },
             openSwalWindowDeletePermission(permission){
                 console.log(permission)
@@ -158,7 +167,7 @@
                 }).then((result) => {
                     let interceptor = this.setInterceptorAxios('Eliminando el permiso, espere un momento');
                     
-                    axios.delete(`/permissions/${permission.id}`)
+                    axios.delete(`/roles/${permission.id}`)
                         .then(response => {
                             this.ajaxReloadDatatable()
 
@@ -174,16 +183,16 @@
             }
         },
         mounted() {
-            let datatableSettings = this.loadDatatableSettings()
+            // let datatableSettings = this.loadDatatableSettings()
 
-            this.setDatatableSettings(datatableSettings)
-            let datatable = this.loadDatatable('table#table-permissions-list', this.datatableSettings)
-            this.setDatatable(datatable)
+            // this.setDatatableSettings(datatableSettings)
+            // let datatable = this.loadDatatable('table#table-roles-list', this.datatableSettings)
+            // this.setDatatable(datatable)
 
-            console.log(this.permissions, this.permissions.length)
+            // console.log(this.roles, this.roles.length)
 
-            this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
-            this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
+            // this.listenButtonWithinDatatable('.btn-roles-update', this.getUpdatedListOfRoles, this.openPermissionUpdateForm)
+            // this.listenButtonWithinDatatable('.btn-roles-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeletePermission)
         },
     }
 </script>

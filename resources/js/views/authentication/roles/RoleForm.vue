@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade show" id="modal-permission-form" aria-modal="true" role="dialog">
+    <div class="modal fade show" id="modal-role-form" aria-modal="true" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -9,15 +9,15 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="permission-form" @submit.prevent="submitPermissionForm()">
+                    <form id="role-form" @submit.prevent="submitRoleForm()">
                         <div class="form-group">
                             <label>Nombre</label>
                             <input type="text" 
                                 class="form-control" 
                                 placeholder="modulo_permiso"
-                                dusk="permission-name" 
-                                v-model="permission.name"
-                                pattern="\w{5,}"
+                                dusk="role-name" 
+                                v-model="role.name"
+                                pattern="[\w\s]{5,}"
                                 title="El nombre debe contener al menos 3 caracteres"
                                 required
                             />
@@ -26,9 +26,9 @@
                             <label>Descripcion</label>
                             <textarea class="form-control" rows="5" 
                                 placeholder="Descripcion..."
-                                pattern="\w{5,}"
-                                dusk="permission-description"
-                                v-model="permission.description"
+                                pattern="[\w\s]{5,}"
+                                dusk="role-description"
+                                v-model="role.description"
                             >
                             </textarea>
                         </div>
@@ -37,9 +37,9 @@
                 <div class="modal-footer justify-content-between">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                     <button type="submit" 
-                        form="permission-form"
+                        form="role-form"
                         :class="classButton" 
-                        dusk="btn-manage-permission"
+                        dusk="btn-manage-role"
                     >
                         {{ textButton }}
                     </button>
@@ -57,11 +57,11 @@
     export default {
         computed: {
             ...mapGetters({
-                updateMode: 'permissions/form/getUpdateMode',
-                permission: 'permissions/form/getPermission',
+                updateMode: 'roles/form/getUpdateMode',
+                role: 'roles/form/getRole',
             }),
             title() {
-                return this.updateMode ? 'ACTUALIZAR PERMISO' : 'REGISTRAR PERMISO'
+                return this.updateMode ? 'ACTUALIZAR ROLE' : 'REGISTRAR ROLE'
             },
             classButton(){
                 return this.updateMode ? 'btn btn-success' : 'btn btn-primary'
@@ -72,7 +72,7 @@
         },
         methods: {
             ...mapActions({
-                submitPermissionForm: 'permissions/form/submitPermissionForm'
+                submitRoleForm: 'roles/form/submitRoleForm'
             }),
         }
     }
