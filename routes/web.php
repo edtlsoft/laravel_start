@@ -25,6 +25,7 @@ Route::post('/permissions', [PermissionController::class, 'store'])->name('permi
 Route::put('/permissions/{permission}', [PermissionController::class, 'update'])->name('permissions.update');
 Route::delete('/permissions/{permission}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
 
+Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
 Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard'); 

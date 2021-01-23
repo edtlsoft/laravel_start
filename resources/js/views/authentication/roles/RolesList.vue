@@ -49,16 +49,6 @@
                                             <th>Fecha de creación</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr v-for="role in roles" :key="role.id">
-                                            <td>{{ role.id }}</td>
-                                            <td></td>
-                                            <td>{{ role.name }}</td>
-                                            <td>{{ role.description }}</td>
-                                            <td>{{ role.permissions.map(p => p.name).join(', ') }}</td>
-                                            <td>{{ role.created_at }}</td>
-                                        </tr>
-                                    </tbody>
                                     <tfoot>
                                         <tr>
                                             <th>Id</th>
@@ -148,8 +138,11 @@
                         } },
                         { data: 'name', },
                         { data: 'description', },
+                        { data: 'permissions', render: function(data) {
+                            return `<a>${data?.length ?? 0} permisos</a>`
+                        } },
                         { data: 'created_at', render: function(data){
-                            return moment(data).format('YYYY-MM-DD hh:mm:ss A')
+                            return moment(data).format('DD/MM/YYYY hh:mm:ss A')
                         } },
                     ],
                 }
@@ -186,16 +179,16 @@
             }
         },
         mounted() {
-            // let datatableSettings = this.loadDatatableSettings()
+            let datatableSettings = this.loadDatatableSettings()
 
-            // this.setDatatableSettings(datatableSettings)
-            // let datatable = this.loadDatatable('table#table-roles-list', this.datatableSettings)
-            // this.setDatatable(datatable)
+            this.setDatatableSettings(datatableSettings)
+            let datatable = this.loadDatatable('table#table-roles-list', this.datatableSettings)
+            this.setDatatable(datatable)
 
-            // console.log(this.roles, this.roles.length)
+            console.log(this.roles, this.roles.length)
 
-            // this.listenButtonWithinDatatable('.btn-roles-update', this.getUpdatedListOfRoles, this.openPermissionUpdateForm)
-            // this.listenButtonWithinDatatable('.btn-roles-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeletePermission)
+            this.listenButtonWithinDatatable('.btn-roles-update', this.getUpdatedListOfRoles, this.openPermissionUpdateForm)
+            this.listenButtonWithinDatatable('.btn-roles-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeletePermission)
         },
     }
 </script>

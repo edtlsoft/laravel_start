@@ -1,4 +1,7 @@
-export default [{ 
+export default [{
+    path: '/authentication',
+    redirect: '/authentication/roles'
+},{ 
     path: '/authentication/permissions',
     component: () => {
         return import(/* webpackChunkName: "Autentication.Permissions" */ '@/views/authentication/permissions/PermissionsList.vue')
