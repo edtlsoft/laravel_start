@@ -14,6 +14,9 @@ export default {
         setRoles            : (state, roles)     => state.roles             = roles,
         setDatatable        : (state, datatable) => state.datatable         = datatable,
         setDatatableSettings: (state, settings)  => state.datatableSettings = settings,
+        addRoleToList(state, role) {
+            state.roles.unshift(role)
+        },
     },
     actions: {
         ajaxReloadDatatable: ({state}, resetPaging=false) => state.datatable.ajax.reload(null, resetPaging),
@@ -51,14 +54,14 @@ export default {
                     axios[method](route, state.role)
                         .then((response) => {
                             //dispatch('roles/ajaxReloadDatatable', !updateMode, {root: true})
-                            commit('roles/setRoles', response.data, {root: true})
+                            commit('roles/addRoleToList', response.data.data, {root: true})
 
                             let message = updateMode ? 'El role se actualizo correctamente.' : 'El role se registro correctamente.'
                             
                             Swal.fire({icon: 'success', title: message})
                                 .then(() => {
                                     mixins.modals.methods.closeModal('div#modal-role-form')
-                                    commit('setRole', {name: '', description: ''})
+                                    commit('setRole', {name: '', description: '', permissions: []})
                                 })
                         })
                         .catch(error => mixins.axios.methods.showErrorHttpAxios(error))

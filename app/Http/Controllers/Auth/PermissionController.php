@@ -22,6 +22,16 @@ class PermissionController extends Controller
         return datatables()->eloquent($permissions)->toJson();
     }
 
+    public function indexSelect2(Request $request) {
+        $request->user()->isAuthorized(['permissions_index']);
+
+        $permissions = Permission::where('name', 'like', "%{$request->search}%")
+            ->orWhere('description', 'like', "%{$request->search}%")
+            ->get();
+
+        return response()->json(compact('permissions'));
+    }
+
     public function store(StorePermissionRequest $request)
     {
         $request->user()->isAuthorized(['permissions_store']);

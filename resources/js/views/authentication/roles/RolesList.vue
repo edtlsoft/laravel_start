@@ -45,6 +45,7 @@
                                             <th>Opciones</th>
                                             <th>Nombre</th>
                                             <th>Description</th>
+                                            <th>Permisos</th>
                                             <th>Fecha de creación</th>
                                         </tr>
                                     </thead>
@@ -54,7 +55,8 @@
                                             <td></td>
                                             <td>{{ role.name }}</td>
                                             <td>{{ role.description }}</td>
-                                            <td>{{ role.create_at }}</td>
+                                            <td>{{ role.permissions.map(p => p.name).join(', ') }}</td>
+                                            <td>{{ role.created_at }}</td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
@@ -63,6 +65,7 @@
                                             <th>Opciones</th>
                                             <th>Nombre</th>
                                             <th>Description</th>
+                                            <th>Permisos</th>
                                             <th>Fecha de creación</th>
                                         </tr>
                                     </tfoot>

@@ -38,6 +38,11 @@ class RoleResourceTest extends TestCase
         );
 
         $this->assertEquals(
+            $role->created_at,
+            $roleResource['created_at']
+        );
+
+        $this->assertEquals(
             $role->permissions,
             $roleResource['permissions']
         );

@@ -176,6 +176,11 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
+         * Dusk
+         */
+        App\Providers\DuskServiceProvider::class,
+
+        /*
          * Datatables
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
