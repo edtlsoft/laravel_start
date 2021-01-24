@@ -28,7 +28,7 @@ class DuskServiceProvider extends ServiceProvider
         /*
         * SELECCIONAR UNA OPCION DE UN SELECT2 CON AJAX
         */
-        Browser::macro('select2Modal', function ($field, $value = null, $waitSearch=1000, $wait = 2, $suffix = ' + .select2') {
+        Browser::macro('select2Modal', function ($field, $value = null, $waitSearch=2000, $wait = 2, $suffix = ' + .select2') {
             /** @var Browser $this */
 
             $elementSelector     = $field.$suffix;

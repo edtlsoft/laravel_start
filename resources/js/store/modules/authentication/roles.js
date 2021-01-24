@@ -53,8 +53,7 @@ export default {
 
                     axios[method](route, state.role)
                         .then((response) => {
-                            //dispatch('roles/ajaxReloadDatatable', !updateMode, {root: true})
-                            commit('roles/addRoleToList', response.data.data, {root: true})
+                            dispatch('roles/ajaxReloadDatatable', !updateMode, {root: true})
 
                             let message = updateMode ? 'El role se actualizo correctamente.' : 'El role se registro correctamente.'
                             

@@ -35,9 +35,11 @@
                         </div>
                         <div class="form-group">
                             <label>Permisos</label>
-                            <select id="role-permissions" :multiple="select2.multiple">
-
-                            </select>
+                            <Select2Component 
+                                id="role-permissions" 
+                                :multiple="true" 
+                                :settings="settingsSelect2"
+                            />
                         </div>
                     </form>
                 </div>
@@ -59,16 +61,38 @@
 </template>
 
 <script>
-    window.select2 = require('select2');
-    require('select2/dist/js/i18n/es.js');
+    import Select2Component from '@/components/Select2Component'
 
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     export default {
+        components: {
+            Select2Component,
+        },
         data: () => {
             return({
-                select2: {
-                    multiple: true,
+                settingsSelect2: {
+                    mount: false,
+                    closeOnSelect: false,
+                    ajax: {
+                        url: '/permissions/select2',
+                        dataType: 'JSON',
+                        delay: 50,
+                        data: function (params) {
+                            return {
+                                search: params.term, // search term
+                            };
+                        },
+                        processResults: function (response) {  //console.log(response.codigos);
+                            return { results: response.permissions };
+                        },
+                        cache: true
+                    },
+                    templateResult: function (data){
+                        return (typeof data.id !== 'undefined' && data.id !== '') ? data.name : 'Buscando...'
+                    },
+                    templateSelection: null,
+                    unselect: null,
                 }
             })
         },
@@ -91,73 +115,38 @@
             ...mapActions({
                 submitRoleForm: 'roles/form/submitRoleForm'
             }),
-            cargarSelect2MultiplePermisos: function() {
-                let me = this;
-                setTimeout(() => {
-                    $('select#role-permissions').select2({
-                        theme: 'bootstrap',
-                        language: "es",
-                        multiple: true,
-                        closeOnSelect: false,
-                        ajax: {
-                            url: '/permissions/select2',
-                            dataType: 'JSON',
-                            delay: 50,
-                            data: function (params) {
-                                return {
-                                    search: params.term, // search term
-                                };
-                            },
-                            processResults: function (response) {  //console.log(response.codigos);
-                                return {
-                                    results: response.permissions
-                                };
-                            },
-                            cache: true
-                        },
-                        minimumInputLength: 0,
-                        templateResult: function (data){
-                            if( typeof data.id !== 'undefined' && data.id !== '' ) {
-                                return data.name;
-                            }
-                            else{
-                                return 'Buscando...';
-                            }
-                        }, // omitted for brevity, see the source of this page
-                        templateSelection: function (data){
-                            if( typeof data.id !== 'undefined' && data.id !== '' ) {
-                                if( ! me.role.permissions.includes(data.id) ) {
-                                    me.role.permissions.push(data.id); 
-                                }
+            mountSelect2() {
+                const self = this
 
-                                return data.name;
-                            }
-                            else{
-                                return 'Seleccione los permisos para el rol';
-                            }
-                        } // omitted for brevity, see the source of this page
-                    });
+                const select2TemplateSelection = function (data){
+                    if( typeof data.id !== 'undefined' && data.id !== '' ) {
+                        if( ! self.role.permissions.includes(data.id) ) {
+                            self.role.permissions.push(data.id); 
+                        }
+                        return data.name;
+                    }
+                    return 'Seleccione los permisos para el rol';
+                }
 
-                    $('select#role-permissions').on('select2:unselect', function (e) {
-                        var id = e.params.data.id;
-                        me.role.permissions.splice(me.role.permissions.indexOf(id), 1);
-                    });
-                }, 500);
-            },
+                const select2Unselect = function (e) {
+                    self.role.permissions.splice(self.role.permissions.indexOf(e.params.data.id), 1);
+                }
+
+                this.settingsSelect2.templateSelection = select2TemplateSelection
+                this.settingsSelect2.unselect = select2Unselect
+                this.settingsSelect2.mount = true
+            }
         },
         mounted() {
-            this.cargarSelect2MultiplePermisos()
+            this.mountSelect2()
         }
     }
 </script>
 
 <style lang="scss">
-
-    // // Select2
+    // Select2
     @import "~select2/dist/css/select2.min.css";
 
-
-    // // Select2 Bootstrap Theme
+    // Select2 Bootstrap Theme
     @import "~select2-bootstrap-theme/dist/select2-bootstrap.min.css";
-
 </style>

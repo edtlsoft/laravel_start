@@ -138,8 +138,8 @@
                         } },
                         { data: 'name', },
                         { data: 'description', },
-                        { data: 'permissions', render: function(data) {
-                            return `<a>${data?.length ?? 0} permisos</a>`
+                        { data: 'permissions', name: 'permissions.name', render: function(data) {
+                            return `<a>${data?.length ?? 0} Permisos</a>`
                         } },
                         { data: 'created_at', render: function(data){
                             return moment(data).format('DD/MM/YYYY hh:mm:ss A')
@@ -184,8 +184,6 @@
             this.setDatatableSettings(datatableSettings)
             let datatable = this.loadDatatable('table#table-roles-list', this.datatableSettings)
             this.setDatatable(datatable)
-
-            console.log(this.roles, this.roles.length)
 
             this.listenButtonWithinDatatable('.btn-roles-update', this.getUpdatedListOfRoles, this.openPermissionUpdateForm)
             this.listenButtonWithinDatatable('.btn-roles-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeletePermission)

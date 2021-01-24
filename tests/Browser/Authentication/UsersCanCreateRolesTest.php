@@ -43,11 +43,8 @@ class UsersCanCreateRolesTest extends DuskTestCase
                 ->click('.swal2-confirm')
                 ->waitForText('New Role')
                 ->assertSee('New Role')
+                ->assertSeeLink("{$permissions->count()} Permisos")
                 ;
-
-                foreach($permissions as $permission) {
-                    $browser->assertSee($permission->name);
-                }
         });
     }
 
