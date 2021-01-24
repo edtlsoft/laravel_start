@@ -13,7 +13,7 @@ const cleanFolderJs = () => {
         }
 
         files.forEach(function (file) {
-            if (!excludes_files.includes(file)) {
+            if( !excludes_files.includes(file) ) {
                 fs.unlink(path.join(path_js, file), (error) => error ? console.log(error) : null)
             }
         });

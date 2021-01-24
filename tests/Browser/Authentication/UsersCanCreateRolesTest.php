@@ -43,11 +43,8 @@ class UsersCanCreateRolesTest extends DuskTestCase
                 ->click('.swal2-confirm')
                 ->waitForText('New Role')
                 ->assertSee('New Role')
+                ->assertSeeLink("{$permissions->count()} Permisos")
                 ;
-
-                foreach($permissions as $permission) {
-                    $browser->assertSee($permission->name);
-                }
         });
     }
 
@@ -62,8 +59,8 @@ class UsersCanCreateRolesTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user) {
             $browser->loginAs($user)
                 ->visit('/authentication/roles')
-                ->waitFor('@btn-roles-form')
-                ->click('@btn-roles-form')
+                ->waitFor('@btn-role-form')
+                ->click('@btn-role-form')
                 ->whenAvailable('#modal-role-form', function ($modal) {
                     $modal->assertSee('REGISTRAR ROLE')
                         ->type('@role-name', 'role_five')

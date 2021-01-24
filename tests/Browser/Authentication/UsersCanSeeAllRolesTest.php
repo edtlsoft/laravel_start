@@ -31,7 +31,7 @@ class UsersCanSeeAllRolesTest extends DuskTestCase
             foreach ($roles as $role) {
                 $browser->assertSee($role->name)
                     ->assertSee($role->description)
-                    ->assertSee("{$role->permissions->count()} permisos")
+                    ->assertSee("{$role->permissions->count()} Permisos")
                     ;
             }
         });

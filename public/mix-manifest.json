@@ -1,8 +1,7 @@
 {
-    "/js/app.js": "/js/app.js?id=4188aa80f1943d137b32",
-    "/css/app.css": "/css/app.css?id=3f18688351fc37732217",
-    "/js/Autentication.Permissions.da4cdf2a8fc3c6d475c1.js": "/js/Autentication.Permissions.da4cdf2a8fc3c6d475c1.js?id=48c419311274ce97b673",
-    "/js/Autentication.Roles.01e3d9cfc111a7cd55f5.js": "/js/Autentication.Roles.01e3d9cfc111a7cd55f5.js?id=70f85e18bacd41f34116",
-    "/js/Dashboard.e4f502c0a873caabdbf2.js": "/js/Dashboard.e4f502c0a873caabdbf2.js?id=76e06f03c652d1e4ac8e",
-    "/js/vendors~Autentication.Roles.b2fa4d1a6dc100533538.js": "/js/vendors~Autentication.Roles.b2fa4d1a6dc100533538.js?id=9b307c1204149e2f2ac6"
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/Autentication.Permissions.76c85d3fc654b322ddd9.js": "/js/Autentication.Permissions.76c85d3fc654b322ddd9.js",
+    "/js/Autentication.Roles.709da4b9eb64ee39f435.js": "/js/Autentication.Roles.709da4b9eb64ee39f435.js",
+    "/js/Dashboard.ff0e425e8f27162bca63.js": "/js/Dashboard.ff0e425e8f27162bca63.js"
 }

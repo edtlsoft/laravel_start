@@ -32,3 +32,31 @@ $fa-font-path: "../webfonts";
 
 // DataTables Fixed Header
 @import "~datatables.net-fixedHeader-bs4/css/fixedHeader.bootstrap4.min.css";
+
+
+// Select2
+@import "~select2/dist/css/select2.min.css";
+
+// Select2 Bootstrap Theme
+@import "~select2-bootstrap-theme/dist/select2-bootstrap.min.css";
+
+
+/**** ESTILOS SELECT2 ****/
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+    margin-top: 0px !important;
+    padding-left: 0px !important;
+}
+
+.select2-container--bootstrap .select2-selection--single {
+    height: 34px !important;
+    line-height: 1.42857143;
+    padding: 6px 24px 6px 12px;
+}
+
+.select2-container--bootstrap li.select2-results__option[aria-selected=true] {
+    background-color: #337ab7D1;
+    color: #f6f6f6;
+}
+
+  

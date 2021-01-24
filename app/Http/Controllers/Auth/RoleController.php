@@ -18,7 +18,7 @@ class RoleController extends Controller
     public function index(Request $request) {
         $request->user()->isAuthorized(['roles_index']);
 
-        $roles = Role::latest()->with('permissions');
+        $roles = Role::latest()->with('permissions')->select('roles.*');
 
         return datatables()->eloquent($roles)->toJson();
     }

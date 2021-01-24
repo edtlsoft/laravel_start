@@ -47,6 +47,9 @@ require('datatables.net-fixedheader-bs4')
 window.moment = require('moment');
 moment.locale('es');
 
+// Select 2
+require('select2');
+require('select2/dist/js/i18n/es.js');
 
 
 /**

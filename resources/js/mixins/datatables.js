@@ -1,7 +1,7 @@
 export default {
     data() {
         return ({
-            settings: {
+            settingsDatatable: {
                 fixedHeader: true,
                 processing: true,
                 serverSide: true,
@@ -40,10 +40,10 @@ export default {
         })
     },
     methods: {
-        loadDatatable(tableId, settings) {
-            settings = Object.assign(this.settings, settings)
+        loadDatatable(tableId, settingsDatatable) {
+            settingsDatatable = Object.assign(this.settingsDatatable, settingsDatatable)
 
-            return $(tableId).DataTable(settings);
+            return $(tableId).DataTable(settingsDatatable);
         },
         filterArrayDataForId(arrayData, id) {
             return arrayData.find(data => {
