@@ -60,9 +60,9 @@
 </template>
 
 <script>
-    import Select2Component from '@/components/Select2Component'
-
     import { mapGetters, mapMutations, mapActions } from 'vuex'
+
+    import Select2Component from '@/components/Select2Component.vue'
 
     export default {
         components: {
@@ -119,11 +119,3 @@
         }
     }
 </script>
-
-<style lang="scss">
-    // Select2
-    @import "~select2/dist/css/select2.min.css";
-
-    // Select2 Bootstrap Theme
-    @import "~select2-bootstrap-theme/dist/select2-bootstrap.min.css";
-</style>
