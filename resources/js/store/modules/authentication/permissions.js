@@ -3,7 +3,32 @@ export default {
     state: {
         permissions: [],
         datatable  : null,
-        datatableSettings: {},
+        datatableSettings: {
+            mount: false,
+            ajax: {},
+            columns: [
+                { data: 'id', },
+                { data: 'id', render: function(permissionId){
+                    return `
+                        <div class="w-100 text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-permissions-delete" data-id="${permissionId}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `
+                } },
+                { data: 'name', },
+                { data: 'description', },
+                { data: 'created_at', render: function(data){
+                    return moment(data).format('YYYY-MM-DD hh:mm:ss A')
+                } },
+            ],
+        },
     },
     getters: {
         getPermissions      : state => state.permissions,
@@ -13,7 +38,7 @@ export default {
     mutations: {
         setPermissions      : (state, permissions) => state.permissions       = permissions,
         setDatatable        : (state, datatable)   => state.datatable         = datatable,
-        setDatatableSettings: (state, settings)    => state.datatableSettings = settings,
+        setDatatableSettings: (state, settings)    => state.datatableSettings = Object.assign(state.datatableSettings, settings),
     },
     actions: {
         ajaxReloadDatatable: ({state}, resetPaging=false) => state.datatable.ajax.reload(null, resetPaging),

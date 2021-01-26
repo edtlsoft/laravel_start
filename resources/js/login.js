@@ -22,7 +22,7 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let routes = [
-    { path: '/', component: require('./views/auth/Login.vue').default },
+    { path: '/', component: require('./views/authentication/Login.vue').default },
     // { path: '/PasswordReset', component: require('./components/auth/PasswordReset.vue').default },
     // { path: '/password/reset/:token/email/:email', component: require('./components/auth/PasswordResetForgot.vue').default },
 ]

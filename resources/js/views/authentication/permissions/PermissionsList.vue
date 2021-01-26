@@ -38,8 +38,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-hover" id="table-permissions-list">
-                                    <thead>
+                                <DatatableComponent 
+                                    id="table-permissions-list" 
+                                    :settings="datatableSettings"
+                                    @datatableMounted="datatableMounted($event)"
+                                >
+                                    <template v-slot:header>
                                         <tr>
                                             <th>Id</th>
                                             <th>Opciones</th>
@@ -47,8 +51,8 @@
                                             <th>Description</th>
                                             <th>Fecha de creación</th>
                                         </tr>
-                                    </thead>
-                                    <tfoot>
+                                    </template>
+                                    <template v-slot:footer>
                                         <tr>
                                             <th>Id</th>
                                             <th>Opciones</th>
@@ -56,8 +60,8 @@
                                             <th>Description</th>
                                             <th>Fecha de creación</th>
                                         </tr>
-                                    </tfoot>
-                                </table>
+                                    </template>
+                                </DatatableComponent>
                             </div>
                         </div>
                     </div>
@@ -75,10 +79,13 @@
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     import PermissionForm from './PermissionForm';
+    
+    import DatatableComponent from '@/components/DatatableComponent';
 
     export default {
         components: {
             PermissionForm,
+            DatatableComponent,
         },
         computed: {
             ...mapGetters({
@@ -105,42 +112,6 @@
                 this.setUpdateMode(updateMode)
                 permission ? this.setPermission(permission) : false
                 this.openModal('div#modal-permission-form')
-            },
-            loadDatatableSettings() {
-                let self = this
-
-                return {
-                    ajax: {
-                        url: '/permissions',
-                        dataSrc: function(json){
-                            let data = json.data
-                            self.setPermissions(data)
-                            return data
-                        },
-                    },
-                    columns: [
-                        { data: 'id', },
-                        { data: 'id', render: function(permissionId){
-                            return `
-                                <div class="w-100 text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger btn-permissions-delete" data-id="${permissionId}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            `
-                        } },
-                        { data: 'name', },
-                        { data: 'description', },
-                        { data: 'created_at', render: function(data){
-                            return moment(data).format('YYYY-MM-DD hh:mm:ss A')
-                        } },
-                    ],
-                }
             },
             openPermissionUpdateForm(permission) {
                 this.openPermissionForm(true, permission)
@@ -171,19 +142,31 @@
 
                     this.ejectInterceptorAxios(interceptor)
                 })
+            },
+            mountDatatable() {
+                let self     = this
+
+                let settings = {
+                    mount: true,
+                    ajax: {
+                        url: '/permissions',
+                        dataSrc: function(json){
+                            self.setPermissions(json.data)
+                            return json.data
+                        },
+                    },
+                }
+                
+                this.setDatatableSettings(settings)
+            },
+            datatableMounted(datatable) {
+                this.setDatatable(datatable)
+                this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
+                this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
             }
         },
         mounted() {
-            let datatableSettings = this.loadDatatableSettings()
-
-            this.setDatatableSettings(datatableSettings)
-            let datatable = this.loadDatatable('table#table-permissions-list', this.datatableSettings)
-            this.setDatatable(datatable)
-
-            console.log(this.permissions, this.permissions.length)
-
-            this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
-            this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
+            this.mountDatatable()
         },
     }
 </script>

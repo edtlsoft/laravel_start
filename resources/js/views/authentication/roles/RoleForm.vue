@@ -93,23 +93,22 @@
             }),
             mountSelect2() {
                 const self   = this
-                let settings = {}
 
-                settings.templateSelection = function (data){
-                    if( typeof data.id !== 'undefined' && data.id !== '' ) {
-                        if( ! self.role.permissions.includes(data.id) ) {
-                            self.role.permissions.push(data.id); 
+                let settings = {
+                    mount: true,
+                    templateSelection: function (data){
+                        if( typeof data.id !== 'undefined' && data.id !== '' ) {
+                            if( ! self.role.permissions.includes(data.id) ) {
+                                self.role.permissions.push(data.id); 
+                            }
+                            return data.name;
                         }
-                        return data.name;
+                        return 'Seleccione los permisos para el rol';
+                    },
+                    unselect: function (e) {
+                        self.role.permissions.splice(self.role.permissions.indexOf(e.params.data.id), 1);
                     }
-                    return 'Seleccione los permisos para el rol';
                 }
-
-                settings.unselect = function (e) {
-                    self.role.permissions.splice(self.role.permissions.indexOf(e.params.data.id), 1);
-                }
-
-                settings.mount = true
 
                 this.setSelect2Settings(settings)
             }

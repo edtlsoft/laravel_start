@@ -1,5 +1,5 @@
 <template>
-    <select :id="id" :multiple="settingsDefault.multiple">
+    <select :id="id" :multiple="defaultSettings.multiple">
     </select>
 </template>
 
@@ -17,7 +17,7 @@
         },
         data() {
             return({
-                settingsDefault: {
+                defaultSettings: {
                     mount: false,
                     id: 'select2-component',
                     multiple: false,
@@ -33,23 +33,20 @@
         },
         watch: {
             'settings.mount': function(newVal) {
-                this.settingsDefault.mount = newVal
+                this.defaultSettings.mount = newVal
                 
                 if( newVal ) {
-                    console.log('settings.mount', newVal)
                     this.mountComponent()
                 };
             }
         },
         methods: {
             mountComponent: function() {
-                const settings = Object.assign(this.settingsDefault, this.settings)
-
-                console.log(settings)
+                const settings = Object.assign(this.defaultSettings, this.settings)
 
                 $(`select#${this.id}`).select2(settings);
 
-                $(`select#${this.id}`).on('select2:unselect', this.settings.unselect);
+                $(`select#${this.id}`).on('select2:unselect', this.settings.unselect)
             },
         },
     }

@@ -38,8 +38,12 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table class="table table-bordered table-hover" id="table-roles-list">
-                                    <thead>
+                                <DatatableComponent 
+                                    id="table-roles-list" 
+                                    :settings="datatableSettings"
+                                    @datatableMounted="setDatatable($event)"
+                                >
+                                    <template v-slot:header>
                                         <tr>
                                             <th>Id</th>
                                             <th>Opciones</th>
@@ -48,8 +52,8 @@
                                             <th>Permisos</th>
                                             <th>Fecha de creación</th>
                                         </tr>
-                                    </thead>
-                                    <tfoot>
+                                    </template>
+                                    <template v-slot:footer>
                                         <tr>
                                             <th>Id</th>
                                             <th>Opciones</th>
@@ -58,8 +62,8 @@
                                             <th>Permisos</th>
                                             <th>Fecha de creación</th>
                                         </tr>
-                                    </tfoot>
-                                </table>
+                                    </template>
+                                </DatatableComponent>
                             </div>
                         </div>
                     </div>
@@ -77,10 +81,13 @@
     import { mapGetters, mapMutations, mapActions } from 'vuex'
 
     import RoleForm from './RoleForm';
+    
+    import DatatableComponent from '@/components/DatatableComponent';
 
     export default {
         components: {
             RoleForm,
+            DatatableComponent,
         },
         computed: {
             ...mapGetters({
@@ -107,45 +114,6 @@
                 this.setUpdateMode(updateMode)
                 permission ? this.setPermission(permission) : false
                 this.openModal('div#modal-role-form')
-            },
-            loadDatatableSettings() {
-                let self = this
-
-                return {
-                    ajax: {
-                        url: '/roles',
-                        dataSrc: function(json){
-                            let data = json.data
-                            self.setRoles(data)
-                            return data
-                        },
-                    },
-                    columns: [
-                        { data: 'id', },
-                        { data: 'id', render: function(permissionId){
-                            return `
-                                <div class="w-100 text-center">
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-primary btn-roles-update" data-id="${permissionId}">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-danger btn-roles-delete" data-id="${permissionId}">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            `
-                        } },
-                        { data: 'name', },
-                        { data: 'description', },
-                        { data: 'permissions', name: 'permissions.name', render: function(data) {
-                            return `<a>${data?.length ?? 0} Permisos</a>`
-                        } },
-                        { data: 'created_at', render: function(data){
-                            return moment(data).format('DD/MM/YYYY hh:mm:ss A')
-                        } },
-                    ],
-                }
             },
             openPermissionUpdateForm(permission) {
                 this.openRoleForm(true, permission)
@@ -176,17 +144,31 @@
 
                     this.ejectInterceptorAxios(interceptor)
                 })
+            },
+            mountDatatable() {
+                let self     = this
+
+                let settings = {
+                    mount: true,
+                    ajax: {
+                        url: '/roles',
+                        load: function(json){
+                            self.setRoles(json.data)
+                            return json.data
+                        }
+                    }
+                }
+                
+                this.setDatatableSettings(settings)
+            },
+            datatableMounted(datatable) {
+                this.setDatatable(datatable)
+                this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
+                this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
             }
         },
         mounted() {
-            let datatableSettings = this.loadDatatableSettings()
-
-            this.setDatatableSettings(datatableSettings)
-            let datatable = this.loadDatatable('table#table-roles-list', this.datatableSettings)
-            this.setDatatable(datatable)
-
-            this.listenButtonWithinDatatable('.btn-roles-update', this.getUpdatedListOfRoles, this.openPermissionUpdateForm)
-            this.listenButtonWithinDatatable('.btn-roles-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeletePermission)
+            this.mountDatatable()
         },
     }
 </script>

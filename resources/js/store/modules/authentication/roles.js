@@ -3,7 +3,35 @@ export default {
     state: {
         roles: [],
         datatable  : null,
-        datatableSettings: {},
+        datatableSettings: {
+            mount: false,
+            ajax: {},
+            columns: [
+                { data: 'id', },
+                { data: 'id', render: function(permissionId){
+                    return `
+                        <div class="w-100 text-center">
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary btn-roles-update" data-id="${permissionId}">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-sm btn-danger btn-roles-delete" data-id="${permissionId}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `
+                } },
+                { data: 'name', },
+                { data: 'description', },
+                { data: 'permissions', name: 'permissions.name', render: function(data) {
+                    return `<a>${data?.length ?? 0} Permisos</a>`
+                } },
+                { data: 'created_at', render: function(data){
+                    return moment(data).format('DD/MM/YYYY hh:mm:ss A')
+                } },
+            ],
+        },
     },
     getters: {
         getRoles            : state => state.roles,
@@ -11,11 +39,11 @@ export default {
         getDatatableSettings: state => state.datatableSettings,
     },
     mutations: {
-        setRoles            : (state, roles)     => state.roles             = roles,
-        setDatatable        : (state, datatable) => state.datatable         = datatable,
-        setDatatableSettings: (state, settings)  => state.datatableSettings = settings,
-        addRoleToList(state, role) {
-            state.roles.unshift(role)
+        setRoles             : (state, roles)     => state.roles = roles,
+        setDatatable         : (state, datatable) => state.datatable = datatable,
+        addRoleToList        : (state, role)      => state.roles.unshift(role),
+        setDatatableSettings : (state, settings)  => {
+            state.datatableSettings = Object.assign(state.datatableSettings, settings)
         },
     },
     actions: {
