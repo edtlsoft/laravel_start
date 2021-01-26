@@ -174,7 +174,7 @@
               </router-link>
             </li>
             <li class="nav-item" id="module-authetication">
-              <router-link class="nav-link" to="/authentication" active-class="active">
+              <router-link class="nav-link" to="/authentication" active-class="active" event="" >
                 <i class="nav-icon fas fa-user-shield"></i>
                 <p>Autenticación <i class="right fas fa-angle-left"></i></p>
               </router-link>
