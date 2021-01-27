@@ -78,7 +78,7 @@ export default {
 
                             let message = updateMode ? 'El permiso se actualizo correctamente.' : 'El permiso se registro correctamente.'
                             
-                            Swal.fire({icon: 'success', title: message})
+                            Swal.fire({icon: 'success', title: message, timer: 2000})
                                 .then(() => {
                                     mixins.modals.methods.closeModal('div#modal-permission-form')
                                     commit('setPermission', {name: '', description: ''})

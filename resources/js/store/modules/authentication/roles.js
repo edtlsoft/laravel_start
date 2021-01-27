@@ -114,7 +114,7 @@ export default {
 
                             let message = updateMode ? 'El role se actualizo correctamente.' : 'El role se registro correctamente.'
                             
-                            Swal.fire({icon: 'success', title: message})
+                            Swal.fire({icon: 'success', title: message, timer: 2000})
                                 .then(() => {
                                     mixins.modals.methods.closeModal('div#modal-role-form')
                                     commit('setRole', {name: '', description: '', permissions: []})

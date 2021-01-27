@@ -38,9 +38,8 @@ class ListPermissionsTest extends TestCase
     {
         $user = $this->create_user();
         Permission::factory()->count(3)->create();
-        $permission = ['name' => 'permission_one', 'description' => 'Permission number one'];
 
-        $response = $this->actingAs($user)->postJson(route('permissions.store'), $permission);
+        $response = $this->actingAs($user)->getJson(route('permissions.index'));
 
         $response->assertStatus(401);
     }
