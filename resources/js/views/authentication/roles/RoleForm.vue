@@ -38,6 +38,7 @@
                             <Select2Component 
                                 :id="select2Settings.id"
                                 :settings="select2Settings"
+                                :collection="role.permissions"
                             />
                         </div>
                     </form>
@@ -73,6 +74,7 @@
                 updateMode: 'roles/form/getUpdateMode',
                 role: 'roles/form/getRole',
                 select2Settings: 'roles/form/getSelect2Settings',
+                selectedPermissions: 'roles/form/getSelectedPermissions',
             }),
             title() {
                 return this.updateMode ? 'ACTUALIZAR ROLE' : 'REGISTRAR ROLE'
@@ -83,6 +85,20 @@
             textButton(){
                 return this.updateMode ? 'Actualizar' : 'Guardar'
             },
+        },
+        watch: {
+            selectedPermissions: function(permissions) {
+                let selectId = this.select2Settings.id
+                    
+                $(`select#${selectId}`).val(null).trigger('change');
+
+                if( Array.isArray(permissions) && permissions.length ) {
+                    for(let permission of permissions) {
+                        let option = new Option(permission.name, permission.id, true, true);
+                        $(`select#${selectId}`).append(option).trigger('change');
+                    }
+                }
+            }
         },
         methods: {
             ...mapMutations({
@@ -97,11 +113,13 @@
                 let settings = {
                     mount: true,
                     templateSelection: function (data){
+                        //console.log('templateSelection', data)
+
                         if( typeof data.id !== 'undefined' && data.id !== '' ) {
                             if( ! self.role.permissions.includes(data.id) ) {
                                 self.role.permissions.push(data.id); 
                             }
-                            return data.name;
+                            return data.name || data.text;
                         }
                         return 'Seleccione los permisos para el rol';
                     },

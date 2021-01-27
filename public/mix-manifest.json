@@ -1,7 +1,7 @@
 {
-    "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
-    "/js/Autentication.Permissions.71ea36dba4921c07b226.js": "/js/Autentication.Permissions.71ea36dba4921c07b226.js",
-    "/js/Autentication.Roles.9e55ad3b1643564806c3.js": "/js/Autentication.Roles.9e55ad3b1643564806c3.js",
-    "/js/Dashboard.ff0e425e8f27162bca63.js": "/js/Dashboard.ff0e425e8f27162bca63.js"
+    "/js/app.js": "/js/app.js?id=0ed1e91834ed9b34fecd",
+    "/css/app.css": "/css/app.css?id=028f582636e8846ac113",
+    "/js/Autentication.Permissions.6bbc63a2dcd61f2eca72.js": "/js/Autentication.Permissions.6bbc63a2dcd61f2eca72.js?id=581b4ec5afee225236a0",
+    "/js/Autentication.Roles.3f3054a44abf2f837d99.js": "/js/Autentication.Roles.3f3054a44abf2f837d99.js?id=e0ee8a4ccb3c23253b8b",
+    "/js/Dashboard.e4f502c0a873caabdbf2.js": "/js/Dashboard.e4f502c0a873caabdbf2.js?id=76e06f03c652d1e4ac8e"
 }

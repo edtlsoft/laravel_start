@@ -33,4 +33,22 @@ class RoleController extends Controller
 
         return RoleResource::make($role);
     }
+
+    public function update(Request $request, Role $role)
+    {
+        $request->user()->isAuthorized(['roles_update']);
+
+        $role->update($request->all());
+
+        $role->permissions()->sync($request->permissions);
+
+        return response()->json(compact('role'));
+    }
+
+    // public function destroy(Request $request, Role $role)
+    // {
+    //     $request->user()->isAuthorized(['roles_destroy']);
+
+    //     return $role->delete();
+    // }
 }

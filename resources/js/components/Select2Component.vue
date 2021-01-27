@@ -1,5 +1,6 @@
 <template>
     <select :id="id" :multiple="defaultSettings.multiple">
+
     </select>
 </template>
 
@@ -14,9 +15,11 @@
                 type: Object,
                 required: true,
             },
+            collection: {},
         },
         data() {
             return({
+                select2: null,
                 defaultSettings: {
                     mount: false,
                     id: 'select2-component',
@@ -27,7 +30,8 @@
                     ajax: null,
                     minimumInputLength: 0,
                     templateResult: null,
-                    templateSelection: null
+                    templateSelection: null,
+                    initSelection: null,
                 },
             })
         },
@@ -38,7 +42,7 @@
                 if( newVal ) {
                     this.mountComponent()
                 };
-            }
+            },
         },
         methods: {
             mountComponent: function() {

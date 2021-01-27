@@ -4,18 +4,19 @@ export default {
         roles: [],
         datatable  : null,
         datatableSettings: {
+            id: 'table-roles-list',
             mount: false,
             ajax: {},
             columns: [
                 { data: 'id', },
-                { data: 'id', render: function(permissionId){
+                { data: 'id', render: function(roleId){
                     return `
                         <div class="w-100 text-center">
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-primary btn-roles-update" data-id="${permissionId}">
+                                <button class="btn btn-sm btn-primary btn-role-update" data-id="${roleId}">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-danger btn-roles-delete" data-id="${permissionId}">
+                                <button class="btn btn-sm btn-danger btn-role-delete" data-id="${roleId}">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>
@@ -60,8 +61,8 @@ export default {
                     permissions: [],
                 },
                 select2Settings: {
-                    mount: false,
                     id: 'role-permissions',
+                    mount: false,
                     multiple: true,
                     closeOnSelect: false,
                     ajax: {
@@ -83,12 +84,14 @@ export default {
                     },
                     templateSelection: null,
                     unselect: null,
-                }
+                },
+                selectedPermissions: [],
             },
             getters: {
                 getUpdateMode: state => state.updateMode,
                 getRole: state => state.role,
                 getSelect2Settings: state => state.select2Settings,
+                getSelectedPermissions: state => state.selectedPermissions,
             },
             mutations: {
                 setUpdateMode: (state, value) => state.updateMode = value,
@@ -96,6 +99,7 @@ export default {
                 setSelect2Settings: (state, settings) => {
                     state.select2Settings = Object.assign(state.select2Settings, settings)
                 },
+                setSelectedPermissions: (state, permissions) => state.selectedPermissions = permissions,
             },
             actions: {
                 submitRoleForm({state, commit, dispatch}) {
@@ -112,12 +116,13 @@ export default {
                         .then((response) => {
                             dispatch('roles/ajaxReloadDatatable', !updateMode, {root: true})
 
-                            let message = updateMode ? 'El role se actualizo correctamente.' : 'El role se registro correctamente.'
+                            let message = updateMode ? 'El rol se actualizo correctamente.' : 'El rol se registro correctamente.'
                             
-                            Swal.fire({icon: 'success', title: message, timer: 2000})
+                            Swal.fire({icon: 'success', title: message, timer: 3000})
                                 .then(() => {
                                     mixins.modals.methods.closeModal('div#modal-role-form')
                                     commit('setRole', {name: '', description: '', permissions: []})
+                                    $(`select#${state.select2Settings.id}`).val(null).trigger('change');
                                 })
                         })
                         .catch(error => mixins.axios.methods.showErrorHttpAxios(error))

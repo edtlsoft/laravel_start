@@ -24,8 +24,8 @@ class UsersCanDeletePermissionsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $permission) {
             $browser->loginAs($user)
                 ->visit('/authentication/permissions')
-                ->waitFor('.btn-permissions-delete')
-                ->click('.btn-permissions-delete')
+                ->waitFor('.btn-permission-delete')
+                ->click('.btn-permission-delete')
                 ->waitForText("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
                 ->assertSee("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
                 ->click('.swal2-confirm')
@@ -48,8 +48,8 @@ class UsersCanDeletePermissionsTest extends DuskTestCase
         $this->browse(function (Browser $browser) use ($user, $permission) {
             $browser->loginAs($user)
                 ->visit('/authentication/permissions')
-                ->waitFor('.btn-permissions-delete')
-                ->click('.btn-permissions-delete')
+                ->waitFor('.btn-permission-delete')
+                ->click('.btn-permission-delete')
                 ->waitForText("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
                 ->assertSee("¿Está realmente seguro de eliminar el permiso {$permission->name}?")
                 ->click('.swal2-confirm')

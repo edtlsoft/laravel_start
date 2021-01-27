@@ -4,6 +4,7 @@ export default {
         permissions: [],
         datatable  : null,
         datatableSettings: {
+            id: 'table-permissions-list',
             mount: false,
             ajax: {},
             columns: [
@@ -12,10 +13,10 @@ export default {
                     return `
                         <div class="w-100 text-center">
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-primary btn-permissions-update" data-id="${permissionId}">
+                                <button class="btn btn-sm btn-primary btn-permission-update" data-id="${permissionId}">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <button class="btn btn-sm btn-danger btn-permissions-delete" data-id="${permissionId}">
+                                <button class="btn btn-sm btn-danger btn-permission-delete" data-id="${permissionId}">
                                     <i class="fas fa-trash"></i>
                                 </button>
                             </div>

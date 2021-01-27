@@ -39,9 +39,9 @@
                             </div>
                             <div class="card-body">
                                 <DatatableComponent 
-                                    id="table-roles-list" 
+                                    :id="datatableSettings.id" 
                                     :settings="datatableSettings"
-                                    @datatableMounted="setDatatable($event)"
+                                    @datatableMounted="datatableMounted($event)"
                                 >
                                     <template v-slot:header>
                                         <tr>
@@ -102,7 +102,8 @@
                 setDatatable: 'roles/setDatatable',
                 setDatatableSettings: 'roles/setDatatableSettings',
                 setUpdateMode: 'roles/form/setUpdateMode',
-                setPermission: 'roles/form/setPermission',
+                setRole: 'roles/form/setRole',
+                setSelectedPermissions: 'roles/form/setSelectedPermissions',
             }),
             ...mapActions({
                 ajaxReloadDatatable: 'roles/ajaxReloadDatatable',
@@ -110,15 +111,25 @@
             getUpdatedListOfRoles() {
                 return this.roles
             },
-            openRoleForm(updateMode=false, permission=null) {
+            openRoleForm(updateMode=false, role=null) {
                 this.setUpdateMode(updateMode)
-                permission ? this.setPermission(permission) : false
+
+                if( role ) {
+                    let roleCopy     = Object.assign({}, role)
+                    let permissions  = roleCopy.permissions
+                    
+                    roleCopy.permissions = []
+                    
+                    this.setRole(roleCopy)
+                    this.setSelectedPermissions(permissions)
+                }
+                                
                 this.openModal('div#modal-role-form')
             },
-            openPermissionUpdateForm(permission) {
-                this.openRoleForm(true, permission)
+            openRoleUpdateForm(role) {
+                this.openRoleForm(true, role)
             },
-            openSwalWindowDeletePermission(permission){
+            openSwalWindowDeleteRole(permission){
                 console.log(permission)
                 Swal.fire({
                     text: `¿Está realmente seguro de eliminar el permiso ${permission.name}?`,
@@ -146,15 +157,15 @@
                 })
             },
             mountDatatable() {
-                let self     = this
+                let self = this
 
                 let settings = {
                     mount: true,
                     ajax: {
                         url: '/roles',
-                        load: function(json){
-                            self.setRoles(json.data)
-                            return json.data
+                        dataSrc: function({ data }){
+                            self.setRoles(data)
+                            return data
                         }
                     }
                 }
@@ -163,8 +174,9 @@
             },
             datatableMounted(datatable) {
                 this.setDatatable(datatable)
-                this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
-                this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
+                this.setDatatableSettings({mount: false})
+                this.listenButtonWithinDatatable('.btn-role-update', this.getUpdatedListOfRoles, this.openRoleUpdateForm)
+                this.listenButtonWithinDatatable('.btn-role-delete', this.getUpdatedListOfRoles, this.openSwalWindowDeleteRole)
             }
         },
         mounted() {

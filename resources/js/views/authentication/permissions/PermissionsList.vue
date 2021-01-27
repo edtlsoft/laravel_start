@@ -39,7 +39,7 @@
                             </div>
                             <div class="card-body">
                                 <DatatableComponent 
-                                    id="table-permissions-list" 
+                                    :id="datatableSettings.id" 
                                     :settings="datatableSettings"
                                     @datatableMounted="datatableMounted($event)"
                                 >
@@ -150,9 +150,9 @@
                     mount: true,
                     ajax: {
                         url: '/permissions',
-                        dataSrc: function(json){
-                            self.setPermissions(json.data)
-                            return json.data
+                        dataSrc: function({ data }){
+                            self.setPermissions(data)
+                            return data
                         },
                     },
                 }
@@ -161,8 +161,9 @@
             },
             datatableMounted(datatable) {
                 this.setDatatable(datatable)
-                this.listenButtonWithinDatatable('.btn-permissions-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
-                this.listenButtonWithinDatatable('.btn-permissions-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
+                this.setDatatableSettings({mount: false})
+                this.listenButtonWithinDatatable('.btn-permission-update', this.getUpdatedListOfPermissions, this.openPermissionUpdateForm)
+                this.listenButtonWithinDatatable('.btn-permission-delete', this.getUpdatedListOfPermissions, this.openSwalWindowDeletePermission)
             }
         },
         mounted() {

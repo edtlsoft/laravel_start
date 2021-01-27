@@ -38,8 +38,8 @@ class UsersCanCreateRolesTest extends DuskTestCase
 
                     $modal->press('@btn-manage-role');
                 })
-                ->waitForText('El role se registro correctamente.')
-                ->assertSee('El role se registro correctamente.')
+                ->waitForText('El rol se registro correctamente.')
+                ->assertSee('El rol se registro correctamente.')
                 ->click('.swal2-confirm')
                 ->waitForText('New Role')
                 ->assertSee('New Role')
